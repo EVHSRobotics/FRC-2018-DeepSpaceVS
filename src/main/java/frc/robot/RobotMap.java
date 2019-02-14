@@ -27,9 +27,9 @@ public class RobotMap {
   public static int leftT1 = 8;
   public static int leftT2 = 2;
   public static int leftT3 = 7;
-  public static int rightT1 = 3;
+  public static int rightT1 = 6;
   public static int rightT2 = 4;
-  public static int rightT3 = 6;
+  public static int rightT3 = 3;
 
   public static int shifterUp = 2;
   public static int shifterDown = 7;

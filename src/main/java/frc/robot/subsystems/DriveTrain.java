@@ -69,8 +69,8 @@ public class DriveTrain extends Subsystem {
       right2.setNeutralMode(mode);
       right3.setNeutralMode(mode);
 
-      //PIDTemplate.configTalon(left1, true);
-      //PIDTemplate.configTalon(right1, true);
+      PIDTemplate.configTalon(left1, true);
+      PIDTemplate.configTalon(right1, true);
       shifter = new DoubleSolenoid(RobotMap.shifterUp, RobotMap.shifterDown);
       applyShift("slow");
     }
@@ -90,8 +90,8 @@ public class DriveTrain extends Subsystem {
 }
 /** toggle shift based on OI button */
   public void toggleShift(){
-    if(isFast) shifter.set(slow);
-    else shifter.set(fast);
+    if(isFast) applyShift("slow");
+    else if(!isFast) applyShift("fast");
     isFast = !isFast;
   }
   
@@ -105,14 +105,14 @@ public class DriveTrain extends Subsystem {
      
       shifter.set(fast);
       System.out.println("shifted to fast");
-      double P_Drive_HIGH = 0;// 0.35;
+      double P_Drive_HIGH = .35;// 0.35;
       double I_Drive_HIGH = 0; // 1.0E-4;
       double D_Drive_HIGH = 0; // 0.11;
       double F_Drive_HIGH = 0;
-      double targetSpeed_Drive_FAST = 0;
+      double targetSpeed_Drive_FAST = 8350;
 
-      // PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
-      // PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
+       PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
+       PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
       }else if(gear.equals("slow")){
       
       shifter.set(slow);
@@ -121,11 +121,11 @@ public class DriveTrain extends Subsystem {
       double P_Drive_LOW = 0;
       double I_Drive_LOW = 0;
       double D_Drive_LOW = 0;
-      double F_Drive_LOW = .0996;
-      double targetSpeed_Drive_LOW = 0;
+      double F_Drive_LOW = 0;
+      double targetSpeed_Drive_LOW = 8000;
 
-     // PIDTemplate.updatePID(left1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
-     // PIDTemplate.updatePID(right1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
+      PIDTemplate.updatePID(left1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
+      PIDTemplate.updatePID(right1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
     
     } 
   }

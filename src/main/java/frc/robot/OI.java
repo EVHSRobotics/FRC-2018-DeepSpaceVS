@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ToggleShift;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,4 +47,16 @@ public class OI {
   public static Joystick joyThrottle = new Joystick(0);
   public static Joystick joyTurn = new Joystick(1);
   public static Joystick joyXBox = new Joystick(2);
+  public static JoystickButton buttonT8 = new JoystickButton(joyTurn, 8);
+  public static JoystickButton buttonT7 = new JoystickButton(joyTurn, 7);
+  
+ 
+  static {
+     buttonT7.whenPressed(new ToggleShift());
+
+     buttonT8.whenPressed(new ToggleShift());
+   
+
+
+  }
 }

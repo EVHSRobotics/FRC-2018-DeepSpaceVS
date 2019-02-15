@@ -19,6 +19,7 @@ import frc.robot.subsystems.SubsystemNames;
 public class JoystickDrive extends Command {
   DriveTrain drive;
   public JoystickDrive() {
+    requires(Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN));
   }
 
   // Called just before this Command runs the first time

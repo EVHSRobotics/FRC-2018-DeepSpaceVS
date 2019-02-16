@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.DriveStraight;
 import frc.robot.commands.ToggleShift;
 
 /**
@@ -49,12 +50,17 @@ public class OI {
   public static Joystick joyXBox = new Joystick(2);
   public static JoystickButton buttonT8 = new JoystickButton(joyTurn, 8);
   public static JoystickButton buttonT7 = new JoystickButton(joyTurn, 7);
-  
+  public static JoystickButton button1 = new JoystickButton(joyTurn , 1);
+  public static JoystickButton button2 = new JoystickButton(joyThrottle, 2);
  
   static {
      buttonT7.whenPressed(new ToggleShift());
 
      buttonT8.whenPressed(new ToggleShift());
+
+     button1.whenPressed(new DriveStraight(-Config.slowTarget/6, 70));
+
+     
    
 
 

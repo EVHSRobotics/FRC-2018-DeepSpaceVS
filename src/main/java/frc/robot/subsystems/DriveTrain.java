@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Config;
 import frc.robot.PIDTemplate;
 import frc.robot.RobotMap;
 import frc.robot.commands.JoystickDrive;
@@ -60,17 +61,16 @@ public class DriveTrain extends Subsystem {
       right3.follow(right1);
 
 
-      NeutralMode mode = NeutralMode.Brake;
+      setNeutralMode(NeutralMode.Brake);
 
-		  left1.setNeutralMode(mode);
-      left2.setNeutralMode(mode);
-      left3.setNeutralMode(mode);
-      right1.setNeutralMode(mode);
-      right2.setNeutralMode(mode);
-      right3.setNeutralMode(mode);
+		  
 
       PIDTemplate.configTalon(left1, true);
       PIDTemplate.configTalon(right1, true);
+
+      left1.setSelectedSensorPosition(0);
+      right1.setSelectedSensorPosition(0);
+
       shifter = new DoubleSolenoid(RobotMap.shifterUp, RobotMap.shifterDown);
       applyShift("slow");
     }
@@ -87,6 +87,12 @@ public class DriveTrain extends Subsystem {
 
     SmartDashboard.putNumber("encoder left", left1.getSelectedSensorPosition(0));
     SmartDashboard.putNumber("encoder right", right1.getSelectedSensorPosition(0));
+    SmartDashboard.putNumber("turn Multiplier", getTurnMultiplier());
+}
+
+/** stops all motors by setting power to 0 */
+public void stop(){
+  drive(ControlMode.PercentOutput, 0, 0);
 }
 /** toggle shift based on OI button */
   public void toggleShift(){
@@ -106,9 +112,9 @@ public class DriveTrain extends Subsystem {
       shifter.set(fast);
       System.out.println("shifted to fast");
       double P_Drive_HIGH = .35;// 0.35;
-      double I_Drive_HIGH = 0; // 1.0E-4;
-      double D_Drive_HIGH = 0; // 0.11;
-      double F_Drive_HIGH = 0;
+      double I_Drive_HIGH = 1.0E-4;
+      double D_Drive_HIGH = 0.11; // 0.11;
+      double F_Drive_HIGH = 0.1042;
       double targetSpeed_Drive_FAST = 8350;
 
        PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
@@ -118,11 +124,11 @@ public class DriveTrain extends Subsystem {
       shifter.set(slow);
       System.out.println("shifted to slow");
 
-      double P_Drive_LOW = 0;
-      double I_Drive_LOW = 0;
-      double D_Drive_LOW = 0;
-      double F_Drive_LOW = 0;
-      double targetSpeed_Drive_LOW = 8000;
+      double P_Drive_LOW = .45;
+      double I_Drive_LOW = 1.8E-4;
+      double D_Drive_LOW = 2;
+      double F_Drive_LOW = 0.1042;
+      double targetSpeed_Drive_LOW = Config.slowTarget;
 
       PIDTemplate.updatePID(left1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
       PIDTemplate.updatePID(right1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
@@ -130,6 +136,17 @@ public class DriveTrain extends Subsystem {
     } 
   }
 
+  /** set mode of talons*/
+  public void setNeutralMode(NeutralMode mode){
+      left1.setNeutralMode(mode);
+      left2.setNeutralMode(mode);
+      left3.setNeutralMode(mode);
+      right1.setNeutralMode(mode);
+      right2.setNeutralMode(mode);
+      right3.setNeutralMode(mode);
+
+
+  }
    /** get right value encoders */
    public int getRtEncoders() {
     return right1.getSelectedSensorPosition(0);
@@ -138,6 +155,23 @@ public class DriveTrain extends Subsystem {
   /** get left value encoders */
   public int getLtEncoders() {
     return left1.getSelectedSensorPosition(0);
+  }
+
+  public int getAvgEncoders(){
+   return (getRtEncoders() + getLtEncoders() ) / 2;
+  }
+
+  public void resetEncoders(){
+    right1.setSelectedSensorPosition(0);
+    left1.setSelectedSensorPosition(0);
+  }
+  
+  public void setTurnMultiplier(double multiplier){
+    Config.turnMultiplier = multiplier;
+  }
+  
+  public double getTurnMultiplier(){
+    return Config.turnMultiplier;
   }
   
 }

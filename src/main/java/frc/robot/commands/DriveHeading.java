@@ -8,67 +8,59 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Config;
-import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.Config;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
 
-public class JoystickDrive extends Command {
-  DriveTrain drive;
-  public JoystickDrive() {
+public class DriveHeading extends Command {
+  private DriveTrain drive;
+  private double speed, heading, distance, ogDistance;
+  private double startingDistance;
+  
+  public DriveHeading() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN));
+		this.distance = distance;
+		this.ogDistance = distance;
+		this.speed = speed;
+		this.heading = heading;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    drive = (DriveTrain)(Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN));
+    drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
+    distance = Config.cyclesToInchesFactor * ogDistance;
+    startingDistance = drive.getAvgEncoders();
+    drive.setNeutralMode(NeutralMode.Brake);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double throttle =  OI.joyThrottle.getRawAxis(1);
-    double turn  = OI.joyTurn.getRawAxis(0);
-    if(OI.button2.get()) drive.setTurnMultiplier(.75);
-    else drive.setTurnMultiplier(1);
-
-   drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * cubeRoot(turn)), sig(throttle + Config.turnMultiplier * cubeRoot(turn)));
-
-   SmartDashboard.putNumber("throttle", throttle);
-
-
+    double angle = Robot.getSensors().getNavX().getAngle();
+    double diff = (heading - angle)/75;
+    drive.drive(ControlMode.Velocity, speed - diff, speed+diff);
   }
-
-  public double cubeRoot(double val) {
-		if (val >= 0) {
-			return Math.pow(val, 3 / 2d);
-		} else {
-			return -Math.pow(-val, 3 / 2d);
-		}
-	}
-
-	public double sig(double val) {
-		return 2 / (1 + Math.pow(Math.E, -7 * Math.pow(val, 3))) - 1;
-	}
- 
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+		return Math.abs(drive.getAvgEncoders() - startingDistance) > Math.abs(distance);
   }
 
-   // Called once after isFinished returns true
-   @Override
-   protected void end() {
-     drive.drive(ControlMode.PercentOutput, 0, 0);
-   }
- 
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+    System.out.println("Reaced " + distance);
+    drive.stop();
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

@@ -37,7 +37,9 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private static  HashMap<SubsystemNames, Subsystem> subsystems;
+  private static SensorBoard sensors;
 
+  private DriveTrain drive;
   private static Compressor compressor;
 
   /**
@@ -54,7 +56,11 @@ public class Robot extends TimedRobot {
     subsystems = new HashMap<SubsystemNames, Subsystem>();
     subsystems.put(SubsystemNames.DRIVE_TRAIN, new DriveTrain());
 
+     drive = (DriveTrain)getSubsystem(SubsystemNames.DRIVE_TRAIN);
+    sensors = new SensorBoard();
     compressor = new Compressor(0);
+
+    
   }
 
   /**
@@ -128,6 +134,12 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+   
+    drive.resetEncoders();
+    
+    drive.applyShift("slow");
+    
   }
 
   /**
@@ -142,6 +154,8 @@ public class Robot extends TimedRobot {
 		} else {
 			compressor.start();
     }
+
+    SmartDashboard.putNumber("average encoders 1", drive.getAvgEncoders());
   }
 
   /**
@@ -153,5 +167,9 @@ public class Robot extends TimedRobot {
 
   public static Subsystem getSubsystem(SubsystemNames name){
       return subsystems.get(name);
+  }
+
+  public static SensorBoard getSensors(){
+    return sensors;
   }
 }

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SubsystemNames;
 
@@ -40,7 +41,8 @@ public class Robot extends TimedRobot {
   private static SensorBoard sensors;
 
   private DriveTrain drive;
-  private static Compressor compressor;
+  private Elevator elevator;
+  public static Compressor compressor;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -55,10 +57,15 @@ public class Robot extends TimedRobot {
 
     subsystems = new HashMap<SubsystemNames, Subsystem>();
     subsystems.put(SubsystemNames.DRIVE_TRAIN, new DriveTrain());
+    subsystems.put(SubsystemNames.ELEVATOR, new Elevator());
 
      drive = (DriveTrain)getSubsystem(SubsystemNames.DRIVE_TRAIN);
+     elevator = (Elevator)getSubsystem(SubsystemNames.ELEVATOR);
+
     sensors = new SensorBoard();
     compressor = new Compressor(0);
+
+    elevator.resetEncoder();
 
     
   }
@@ -103,6 +110,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    elevator.resetEncoder();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -137,6 +145,7 @@ public class Robot extends TimedRobot {
 
    
     drive.resetEncoders();
+    elevator.resetEncoder();
     
     drive.applyShift("slow");
     

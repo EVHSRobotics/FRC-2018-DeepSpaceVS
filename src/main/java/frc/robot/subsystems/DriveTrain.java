@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -30,10 +31,12 @@ public class DriveTrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   TalonSRX left1, left2, left3, right1, right2, right3;
+  //VictorSPX v_left2, v_left3, v_right2, v_right3;
   DoubleSolenoid shifter;
   Value fast = Value.kForward;
   Value slow = Value.kReverse;
   boolean isFast = false;
+  private String gearState;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -46,6 +49,7 @@ public class DriveTrain extends Subsystem {
       left1 = new TalonSRX(RobotMap.leftT1);
       left2 = new TalonSRX(RobotMap.leftT2);
       left3 = new TalonSRX(RobotMap.leftT3);
+   
 
       right1 = new TalonSRX(RobotMap.rightT1);
       right2 = new TalonSRX(RobotMap.rightT2);
@@ -82,6 +86,12 @@ public class DriveTrain extends Subsystem {
    * @param right - set right speed
    */
   public void drive(ControlMode mode, double left, double right){
+   
+    if(mode.equals(ControlMode.Velocity) || mode.equals(ControlMode.MotionMagic)){
+      left *= getDriveConstant();
+      right *= getDriveConstant();
+    }
+
     left1.set(mode, left);
     right1.set(mode, right);
 
@@ -108,8 +118,9 @@ public void stop(){
    */
   public void applyShift(String gear){
     if(gear.equals("fast")){
-     
+      gearState = "fast";
       shifter.set(fast);
+      
       System.out.println("shifted to fast");
       double P_Drive_HIGH = .35;// 0.35;
       double I_Drive_HIGH = 1.0E-4;
@@ -120,7 +131,7 @@ public void stop(){
        PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
        PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
       }else if(gear.equals("slow")){
-      
+      gearState = "slow";
       shifter.set(slow);
       System.out.println("shifted to slow");
 
@@ -172,6 +183,12 @@ public void stop(){
   
   public double getTurnMultiplier(){
     return Config.turnMultiplier;
+  }
+
+  public double getDriveConstant(){
+    if(gearState.equals("slow")) return Config.slowTarget;
+    else if(gearState.equals("fast")) return Config.fastTarget;
+    return 0;
   }
   
 }

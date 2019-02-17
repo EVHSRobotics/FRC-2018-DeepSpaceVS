@@ -34,12 +34,27 @@ public class JoystickDrive extends Command {
   protected void execute() {
     double throttle =  OI.joyThrottle.getRawAxis(1);
     double turn  = OI.joyTurn.getRawAxis(0);
-    if(OI.button2.get()) drive.setTurnMultiplier(.75);
-    else drive.setTurnMultiplier(1);
+    double smallTurn = OI.joyThrottle.getRawAxis(2);
+  //  turn = turn < 0.1 ? turn : 0;
 
-   drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * cubeRoot(turn)), sig(throttle + Config.turnMultiplier * cubeRoot(turn)));
+    if(OI.button2.get()){ 
 
+      drive.setTurnMultiplier(.4);
+    
+     // SmartDashboard.putNumber("small", small)
+      SmartDashboard.putNumber("small turn curve", turnCurve(smallTurn));
+   //  System.out.println("small turn " + Math.random());
+      drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * turnCurve(smallTurn)), sig(throttle + Config.turnMultiplier * turnCurve(smallTurn)));
+    }else { 
+
+      drive.setTurnMultiplier(1);
+      drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * turnCurve(turn)), sig(throttle + Config.turnMultiplier * turnCurve(turn)));
+    }
+  //  System.out.println("turn curve" + turnCurve(turn));
+ // drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * turnCurve(turn)), sig(throttle + Config.turnMultiplier * turnCurve(turn)));
+  // drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * (turn)), sig(throttle + Config.turnMultiplier * (turn)));
    SmartDashboard.putNumber("throttle", throttle);
+   SmartDashboard.putNumber("turn curve", turnCurve(turn));
 
 
   }
@@ -55,7 +70,25 @@ public class JoystickDrive extends Command {
 	public double sig(double val) {
 		return 2 / (1 + Math.pow(Math.E, -7 * Math.pow(val, 3))) - 1;
 	}
- 
+  
+  /**
+   * sigmoid curve for calibrating turn values
+   * @param val - raw turn value
+   * @return calibrated turn value
+   */
+  public double turnCurve(double val){
+    int turnMultiplier = 1;
+    if(Math.abs(val) < .1) return 0;
+
+    if(val >= .9) return 1;
+    if(val <= -.9) return -1;
+    if(val < 0) turnMultiplier *= -1;
+
+    double turnVal =  .65/(.7 + Math.pow(Math.E, -1 * (4*(Math.abs(val) - .4))));
+   
+    return turnVal * turnMultiplier;
+    
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

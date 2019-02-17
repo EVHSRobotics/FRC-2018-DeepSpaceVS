@@ -31,6 +31,7 @@ public class RobotMap {
   public static int rightT2 = 4;
   public static int rightT3 = 3;
 
+  public static int elevator = 1;
   public static int shifterUp = 2;
   public static int shifterDown = 7;
 }

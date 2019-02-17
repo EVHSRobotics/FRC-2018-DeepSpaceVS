@@ -15,6 +15,9 @@ public class Config {
     public static double slowTarget = 600;
     public static double fastTarget = 8350;
 
+    public static double elevatorUpSpeed = 0;
+    public static double elevatorDownSpeed = 0;
+    
     public static double cyclesToInchesFactor = 588.77;
 
     public static double turnMultiplier = 1;

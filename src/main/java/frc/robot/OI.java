@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.ToggleShift;
+import frc.robot.commands.TurnOneEighty;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,6 +53,7 @@ public class OI {
   public static JoystickButton buttonT7 = new JoystickButton(joyTurn, 7);
   public static JoystickButton button1 = new JoystickButton(joyTurn , 1);
   public static JoystickButton button2 = new JoystickButton(joyThrottle, 2);
+  public static JoystickButton button3 = new JoystickButton(joyTurn, 3);
  
   static {
      buttonT7.whenPressed(new ToggleShift());
@@ -60,6 +62,7 @@ public class OI {
 
      button1.whenPressed(new DriveStraight(-Config.slowTarget/6, 70));
 
+     button3.whenPressed(new TurnOneEighty());
      
    
 

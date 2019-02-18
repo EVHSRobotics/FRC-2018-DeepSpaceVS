@@ -31,7 +31,7 @@ public class DriveTrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   TalonSRX left1, left2, left3, right1, right2, right3;
-  //VictorSPX v_left2, v_left3, v_right2, v_right3;
+  VictorSPX v_left2, v_left3, v_right2, v_right3;
   DoubleSolenoid shifter;
   Value fast = Value.kForward;
   Value slow = Value.kReverse;
@@ -46,6 +46,26 @@ public class DriveTrain extends Subsystem {
   }
 
   public DriveTrain(){
+      
+
+    initTalonDrive();
+    //initVictorDrive();
+      setNeutralMode(NeutralMode.Brake, true);
+
+		  
+
+      PIDTemplate.configTalon(left1, true);
+      PIDTemplate.configTalon(right1, true);
+
+      left1.setSelectedSensorPosition(0);
+      right1.setSelectedSensorPosition(0);
+
+      shifter = new DoubleSolenoid(RobotMap.shifterUp, RobotMap.shifterDown);
+      applyShift("high");
+    }
+
+    /**sets up the motors for a driveTrain with all talons */
+    public void initTalonDrive(){
       left1 = new TalonSRX(RobotMap.leftT1);
       left2 = new TalonSRX(RobotMap.leftT2);
       left3 = new TalonSRX(RobotMap.leftT3);
@@ -64,19 +84,27 @@ public class DriveTrain extends Subsystem {
       right2.follow(right1);
       right3.follow(right1);
 
+    }
 
-      setNeutralMode(NeutralMode.Brake);
+    /** sets up motors for a drive train with talons and victors */
+    public void initVictorDrive(){
+      left1 = new TalonSRX(RobotMap.leftT1);
+      v_left2 = new VictorSPX(RobotMap.leftT2);
+      v_left3 = new VictorSPX(RobotMap.leftT3);
 
-		  
+      right1 = new TalonSRX(RobotMap.rightT1);
+      v_right2 = new VictorSPX(RobotMap.rightT2);
+      v_right3 = new VictorSPX(RobotMap.rightT3);
 
-      PIDTemplate.configTalon(left1, true);
-      PIDTemplate.configTalon(right1, true);
+      left1.setInverted(true);
+      v_left2.setInverted(true);
+      v_left3.setInverted(true);
 
-      left1.setSelectedSensorPosition(0);
-      right1.setSelectedSensorPosition(0);
+      v_left2.follow(left1);
+      v_left3.follow(left1);
+      v_right2.follow(right1);
+      v_right3.follow(right1);
 
-      shifter = new DoubleSolenoid(RobotMap.shifterUp, RobotMap.shifterDown);
-      applyShift("slow");
     }
 /**
    * sets speed of motors
@@ -148,13 +176,22 @@ public void stop(){
   }
 
   /** set mode of talons*/
-  public void setNeutralMode(NeutralMode mode){
+  public void setNeutralMode(NeutralMode mode, boolean allTalons){
+    if(allTalons){
       left1.setNeutralMode(mode);
       left2.setNeutralMode(mode);
       left3.setNeutralMode(mode);
       right1.setNeutralMode(mode);
       right2.setNeutralMode(mode);
       right3.setNeutralMode(mode);
+    }else{
+      left1.setNeutralMode(mode);
+      v_left2.setNeutralMode(mode);
+      v_left3.setNeutralMode(mode);
+      right1.setNeutralMode(mode);
+      v_right2.setNeutralMode(mode);
+      v_right3.setNeutralMode(mode);
+    }
 
 
   }

@@ -34,7 +34,21 @@ public class RobotMap {
 
 
 
-  public static int elevator = 1;
-  public static int shifterUp = 2;
-  public static int shifterDown = 7;
+  public static int elevatorMaster = 11;
+  public static int elevatorSlave = 12;
+
+  public static int clawMaster = 10; //inverted
+  public static int clawSlave = 9;
+
+  public static int intakeMaster = 1;
+
+  public static int shifterUp = 1;
+  public static int shifterDown = 2;
+
+  public static int hatchExtend1 = 3;
+  public static int hatchExtend2 = 4;
+
+  public static int hatchExtend1_1 = 5;
+  public static int hatchExtend2_2 = 6;
+
 }

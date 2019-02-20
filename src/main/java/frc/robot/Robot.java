@@ -18,9 +18,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Hatch;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SubsystemNames;
 
 /**
@@ -42,6 +45,9 @@ public class Robot extends TimedRobot {
 
   private DriveTrain drive;
   private Elevator elevator;
+  private Hatch hatch;
+  private Claw claw;
+  private Intake intake;
   public static Compressor compressor;
 
   /**
@@ -58,14 +64,21 @@ public class Robot extends TimedRobot {
     subsystems = new HashMap<SubsystemNames, Subsystem>();
     subsystems.put(SubsystemNames.DRIVE_TRAIN, new DriveTrain());
     subsystems.put(SubsystemNames.ELEVATOR, new Elevator());
+    subsystems.put(SubsystemNames.HATCH, new Hatch());
+    subsystems.put(SubsystemNames.CLAW, new Claw());
+    subsystems.put(SubsystemNames.INTAKE, new Intake());
 
      drive = (DriveTrain)getSubsystem(SubsystemNames.DRIVE_TRAIN);
      elevator = (Elevator)getSubsystem(SubsystemNames.ELEVATOR);
+     claw = (Claw)getSubsystem(SubsystemNames.CLAW);
+     hatch = (Hatch)getSubsystem(SubsystemNames.HATCH);
+     intake = (Intake)getSubsystem(SubsystemNames.INTAKE);
 
     sensors = new SensorBoard();
     compressor = new Compressor(0);
 
     elevator.resetEncoder();
+    claw.resetEncoder();
 
     
   }
@@ -148,6 +161,7 @@ public class Robot extends TimedRobot {
     elevator.resetEncoder();
     
     drive.applyShift("slow");
+    drive.setJayMode(false);
     
   }
 

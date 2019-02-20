@@ -11,74 +11,64 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Config;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SubsystemNames;
 
-public class ElevatorSetPoint extends Command {
- private double target = 0;
- private double error = 0;
+public class ClawSetPoint extends Command {
+  private double target = 0;
+  private double error = 0;
+  Claw claw;
 
- private Elevator elevator;
-  public ElevatorSetPoint(double target) {
+  public ClawSetPoint(double target) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    // requires(Robot.getSubsystem(SubsystemNames.ELEVATOR));
     this.target = target;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    elevator = (Elevator) Robot.getSubsystem(SubsystemNames.ELEVATOR);
 
-	// 	if (elevator.getPos() > target) {
-	// 		System.out.println("Using up target speed");
-	// 	//	elevator.updateTargetSpeed(Config.elevatorUpSpeed);
-	// 	} else {
-	// 		System.out.println("Using down target speed");
-	// //		elevator.updateTargetSpeed(Config.elevatorDownSpeed);
-  // 	}
-
-  
-		//elevator.drive(target, ControlMode.MotionMagic);
+    claw = (Claw) Robot.getSubsystem(SubsystemNames.CLAW);
 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    elevator.drive(-.3, ControlMode.PercentOutput);
-   
-    
-  
-  SmartDashboard.putString("elevator start", "starting elevator");
+
+    claw.drive(ControlMode.PercentOutput, -.3);
+
+    SmartDashboard.putString("elevator start", "starting elevator");
 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  boolean isFinished = false;
-   if(elevator.getPos() < target ) isFinished =  false;
-   else isFinished = true;
-   if(OI.buttonT3.get()) isFinished = true;
+    boolean isFinished = false;
+    if (claw.getPos() < target)
+      isFinished = false;
+    else
+      isFinished = true;
+      
+    if (OI.buttonT3.get())
+      isFinished = true;
 
-   return isFinished;
+    return isFinished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    elevator.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    elevator.stop();
   }
 }

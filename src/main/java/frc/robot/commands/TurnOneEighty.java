@@ -33,15 +33,26 @@ public class TurnOneEighty extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(drive.getLtEncoders() - drive.getRtEncoders() < 40000) {
-      drive.drive(ControlMode.PercentOutput, .75, -.75);
-     } else if(drive.getLtEncoders() - drive.getRtEncoders() < 45000) drive.drive(ControlMode.PercentOutput, .75, -.75);
-    else {
-      stop = true;
-      drive.stop();
-     
+    if(drive.getGearState().equals("slow")){
+      if(drive.getLtEncoders() - drive.getRtEncoders() < 40000) {
+        drive.drive(ControlMode.PercentOutput, .75, -.75);
+      } else if(drive.getLtEncoders() - drive.getRtEncoders() < 46000) drive.drive(ControlMode.PercentOutput, .5, -.5);
+      else {
+        stop = true;
+        drive.stop();
+      
+      }
+    }else if(drive.getGearState().equals("fast")){
+      if(drive.getLtEncoders() - drive.getRtEncoders() < 37000) {
+        drive.drive(ControlMode.PercentOutput, .75, -.75);
+      } else if(drive.getLtEncoders() - drive.getRtEncoders() < 44000) drive.drive(ControlMode.PercentOutput, .4, -.4);
+      else {
+        stop = true;
+        drive.stop();
+      
+      }
     }
-   // drive.drive(ControlMode.PercentOutput, .75, -.75);
+   
   }
 
   // Make this return true when this Command no longer needs to run execute()

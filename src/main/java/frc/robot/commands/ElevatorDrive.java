@@ -10,6 +10,7 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
@@ -35,19 +36,24 @@ public class ElevatorDrive extends Command {
     double value = -OI.joyXBox.getRawAxis(1);
     value = Math.abs(value) < .05 ? 0 : value;
     
-    if(value == 0){
-      Robot.compressor.start();
-    }else{
-      Robot.compressor.stop();
-    }
-    double holdValue = .15; // was .4
-		double multiplier = 1;
-		if (elevator.getPos() > -1500) {
-			holdValue = 0;
-		} else {
-			multiplier = .9;
-		}
-		elevator.drive(-(value * multiplier + holdValue), ControlMode.PercentOutput);
+    // if(value == 0){
+    //   Robot.compressor.start();
+    // }else{
+    //   Robot.compressor.stop();
+    // }
+    // double holdValue = .15; // was .4
+		// double multiplier = 1;
+		// if (elevator.getPos() > -1500) {
+		// 	holdValue = 0;
+		// } else {
+		// 	multiplier = .9;
+		// }
+    // elevator.drive(-(value * multiplier + holdValue), ControlMode.PercentOutput);
+    elevator.drive(value*.8, ControlMode.PercentOutput);
+    SmartDashboard.putNumber("Elevator encoder: ", elevator.getPos());
+    SmartDashboard.putNumber("Elevator voltage: ", elevator.getVoltage());
+
+    
 
   }
 

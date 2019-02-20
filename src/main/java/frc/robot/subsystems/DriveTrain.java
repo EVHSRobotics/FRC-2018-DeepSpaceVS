@@ -37,6 +37,8 @@ public class DriveTrain extends Subsystem {
   Value slow = Value.kReverse;
   boolean isFast = false;
   private String gearState;
+
+  boolean jayMode = false;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -48,9 +50,9 @@ public class DriveTrain extends Subsystem {
   public DriveTrain(){
       
 
-    initTalonDrive();
-    //initVictorDrive();
-      setNeutralMode(NeutralMode.Brake, true);
+   // initTalonDrive();
+    initVictorDrive();
+      setNeutralMode(NeutralMode.Brake, false);
 
 		  
 
@@ -75,9 +77,11 @@ public class DriveTrain extends Subsystem {
       right2 = new TalonSRX(RobotMap.rightT2);
       right3 = new TalonSRX(RobotMap.rightT3);
 
-      right1.setInverted(true);
-      right2.setInverted(true);
-      right3.setInverted(true);
+      right1.setInverted(false);
+      right2.setInverted(false);
+      right3.setInverted(false);
+
+      
 
       left2.follow(left1);
       left3.follow(left1);
@@ -96,9 +100,9 @@ public class DriveTrain extends Subsystem {
       v_right2 = new VictorSPX(RobotMap.rightT2);
       v_right3 = new VictorSPX(RobotMap.rightT3);
 
-      left1.setInverted(true);
-      v_left2.setInverted(true);
-      v_left3.setInverted(true);
+      right1.setInverted(true);
+      v_right2.setInverted(true);
+      v_right3.setInverted(true);
 
       v_left2.follow(left1);
       v_left3.follow(left1);
@@ -228,4 +232,15 @@ public void stop(){
     return 0;
   }
   
+  public String getGearState(){
+    return gearState;
+  }
+  
+  public void setJayMode(boolean jayMode){
+    this.jayMode = jayMode;
+  }
+
+  public boolean getJayMode(){
+    return jayMode;
+  }
 }

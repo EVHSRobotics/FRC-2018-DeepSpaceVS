@@ -11,74 +11,53 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Config;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SubsystemNames;
 
-public class ElevatorSetPoint extends Command {
- private double target = 0;
- private double error = 0;
-
- private Elevator elevator;
-  public ElevatorSetPoint(double target) {
+public class ClawDriver extends Command {
+  Claw claw;
+  public ClawDriver() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    // requires(Robot.getSubsystem(SubsystemNames.ELEVATOR));
-    this.target = target;
+    requires(Robot.getSubsystem(SubsystemNames.CLAW));
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    elevator = (Elevator) Robot.getSubsystem(SubsystemNames.ELEVATOR);
-
-	// 	if (elevator.getPos() > target) {
-	// 		System.out.println("Using up target speed");
-	// 	//	elevator.updateTargetSpeed(Config.elevatorUpSpeed);
-	// 	} else {
-	// 		System.out.println("Using down target speed");
-	// //		elevator.updateTargetSpeed(Config.elevatorDownSpeed);
-  // 	}
-
-  
-		//elevator.drive(target, ControlMode.MotionMagic);
+    claw = (Claw) Robot.getSubsystem(SubsystemNames.CLAW);
+    
 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    elevator.drive(-.3, ControlMode.PercentOutput);
+    double value = -OI.joyXBox.getRawAxis(5);
+    value = Math.abs(value) < .05 ? 0 : value;
    
-    
-  
-  SmartDashboard.putString("elevator start", "starting elevator");
-
+    claw.drive( ControlMode.PercentOutput, value*.5);
+    SmartDashboard.putNumber("Claw encoder: ", claw.getPos());
+    SmartDashboard.putNumber("Claw voltage: ", claw.getBusVoltage());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  boolean isFinished = false;
-   if(elevator.getPos() < target ) isFinished =  false;
-   else isFinished = true;
-   if(OI.buttonT3.get()) isFinished = true;
-
-   return isFinished;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    elevator.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    elevator.stop();
   }
 }

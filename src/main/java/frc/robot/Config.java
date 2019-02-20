@@ -22,5 +22,14 @@ public class Config {
 
     public static double turnMultiplier = 1;
 
+    public static double jayMultipier = 1;
+
+    public static double elevatorHigh = 47000;
+    public static double elevatorMid = 24000;
+    public static double elevatorLow = 100;
+    
+
+    public static double clawLow = 2376;
+
 
 }

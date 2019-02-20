@@ -8,13 +8,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Config;
-import frc.robot.PIDTemplate;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorDrive;
 
@@ -24,12 +21,13 @@ import frc.robot.commands.ElevatorDrive;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private TalonSRX talon;
+  private TalonSRX masterTalon;
+  private VictorSPX slaveVic;
 
 	private double startPos;
 
 	private double targetSpeed = 0;
-
+//peal: 57483
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -38,13 +36,18 @@ public class Elevator extends Subsystem {
   }
 
   public Elevator(){
-    // talon = new TalonSRX(RobotMap.elevator);
+    masterTalon = new TalonSRX(RobotMap.elevatorMaster);
+    slaveVic = new VictorSPX(RobotMap.elevatorSlave);
 
-		// talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		// talon.setInverted(false);
-		// talon.setSensorPhase(true);
-		// talon.setNeutralMode(NeutralMode.Brake);
-		// talon.enableVoltageCompensation(true);
+    slaveVic.follow(masterTalon);
+
+    resetEncoder();
+
+		// masterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		// masterTalon.setInverted(false);
+		// masterTalon.setSensorPhase(true);
+		// masterTalon.setNeutralMode(NeutralMode.Brake);
+		// masterTalon.enableVoltageCompensation(true);
 		// double P = 0; //.24d;
 		// double I = 0; //.0001d;
 		// double D = 0; // 15d;
@@ -53,33 +56,35 @@ public class Elevator extends Subsystem {
 
 		// PIDTemplate.updatePID(talon, P, I, D, F, targetSpeed);
 
-		// startPos = talon.getSelectedSensorPosition(0);
+		 startPos = masterTalon.getSelectedSensorPosition(0);
   }
 
   // public void updateTargetSpeed(double targetSpeeD){
-  //   talon.configMotionCruiseVelocity((int)targetSpeed, 10);
-  //   talon.configMotionAcceleration((int)targetSpeed, 10);
+  //   masterTalon.configMotionCruiseVelocity((int)targetSpeed, 10);
+  //   masterTalon.configMotionAcceleration((int)targetSpeed, 10);
   // }
 
   
 	// public boolean isDone() {
-	// 	System.out.println("Running is done: error: " + talon.getClosedLoopError(0) + " current pos "
-  //       + talon.getSelectedSensorPosition(0) + " current target " + talon.getClosedLoopTarget(0));
+	// 	System.out.println("Running is done: error: " + masterTalon.getClosedLoopError(0) + " current pos "
+  //       + masterTalon.getSelectedSensorPosition(0) + " current target " + masterTalon.getClosedLoopTarget(0));
         
-	// //	return Math.abs(talon.getSelectedSensorPosition(0) - talon.getClosedLoopTarget(0)) < 700; // 700 is not final
+	// //	return Math.abs(masterTalon.getSelectedSensorPosition(0) - masterTalon.getClosedLoopTarget(0)) < 700; // 700 is not final
 	// }
 
 	public void resetEncoder() {
-	//	startPos = talon.getSelectedSensorPosition(0);
+    //startPos = masterTalon.getSelectedSensorPosition(0);
+    masterTalon.setSelectedSensorPosition(0);
   }
   
   public void drive(double value, ControlMode mode){
-  //  talon.set(mode, value);
+    masterTalon.set(mode, value);
   }
 
   public double getPos() {
-    return 0.1;
-//		return talon.getSelectedSensorPosition(0) - startPos;
+    
+    //return masterTalon.getSelectedSensorPosition(0) - startPos;
+    return masterTalon.getSelectedSensorPosition(0);
 	}
 
 	public double getVel() {
@@ -87,7 +92,10 @@ public class Elevator extends Subsystem {
 	//	return talon.getSelectedSensorVelocity(0);
 	}
 
+  public double getVoltage(){
+    return masterTalon.getBusVoltage();
+  }
   public void stop(){
-  //  drive(0, ControlMode.PercentOutput);
+    drive(0, ControlMode.PercentOutput);
   }
 }

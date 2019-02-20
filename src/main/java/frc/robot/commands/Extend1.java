@@ -7,78 +7,45 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Config;
-import frc.robot.OI;
-import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Hatch;
+import frc.robot.*;
 import frc.robot.subsystems.SubsystemNames;
-
-public class ElevatorSetPoint extends Command {
- private double target = 0;
- private double error = 0;
-
- private Elevator elevator;
-  public ElevatorSetPoint(double target) {
+public class Extend1 extends Command {
+  Hatch hatch;
+  public Extend1() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    // requires(Robot.getSubsystem(SubsystemNames.ELEVATOR));
-    this.target = target;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    elevator = (Elevator) Robot.getSubsystem(SubsystemNames.ELEVATOR);
-
-	// 	if (elevator.getPos() > target) {
-	// 		System.out.println("Using up target speed");
-	// 	//	elevator.updateTargetSpeed(Config.elevatorUpSpeed);
-	// 	} else {
-	// 		System.out.println("Using down target speed");
-	// //		elevator.updateTargetSpeed(Config.elevatorDownSpeed);
-  // 	}
-
-  
-		//elevator.drive(target, ControlMode.MotionMagic);
-
+    hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
+    System.out.println("shifting hatch");
+    hatch.toggleHatch1();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    elevator.drive(-.3, ControlMode.PercentOutput);
-   
     
-  
-  SmartDashboard.putString("elevator start", "starting elevator");
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  boolean isFinished = false;
-   if(elevator.getPos() < target ) isFinished =  false;
-   else isFinished = true;
-   if(OI.buttonT3.get()) isFinished = true;
-
-   return isFinished;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    elevator.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    elevator.stop();
   }
 }

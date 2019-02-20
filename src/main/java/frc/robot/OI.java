@@ -9,9 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.DriveStraight;
+import frc.robot.commands.ElevatorSetPoint;
+import frc.robot.commands.Extend1;
+import frc.robot.commands.Extend2;
 import frc.robot.commands.ToggleShift;
-import frc.robot.commands.TurnOneEighty;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -51,18 +52,39 @@ public class OI {
   public static Joystick joyXBox = new Joystick(2);
   public static JoystickButton buttonT8 = new JoystickButton(joyTurn, 8);
   public static JoystickButton buttonT7 = new JoystickButton(joyTurn, 7);
-  public static JoystickButton button1 = new JoystickButton(joyTurn , 1);
+  public static JoystickButton buttonT1 = new JoystickButton(joyTurn , 1);
   public static JoystickButton button2 = new JoystickButton(joyThrottle, 2);
-  public static JoystickButton button3 = new JoystickButton(joyTurn, 3);
+  public static JoystickButton buttonT3 = new JoystickButton(joyTurn, 3);
+  public static JoystickButton buttonT4 = new JoystickButton(joyTurn, 4);
+
+  public static JoystickButton buttonX1 = new JoystickButton(joyXBox, 1);
+  public static JoystickButton buttonX2 = new JoystickButton(joyXBox, 2);
+  public static JoystickButton buttonX3 = new JoystickButton(joyXBox, 3);
+  public static JoystickButton buttonX4 = new JoystickButton(joyXBox, 4);
+  
+
  
   static {
      buttonT7.whenPressed(new ToggleShift());
 
+
      buttonT8.whenPressed(new ToggleShift());
 
-     button1.whenPressed(new DriveStraight(-Config.slowTarget/6, 70));
 
-     button3.whenPressed(new TurnOneEighty());
+    // button1.whenPressed(new DriveStraight(-Config.slowTarget/6, 70));
+
+    
+
+        buttonT1.whenPressed(new Extend1());
+        buttonT4.whenPressed(new Extend2());
+
+       
+       
+        buttonX4.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
+        buttonX2.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
+        buttonX1.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+
+
      
    
 

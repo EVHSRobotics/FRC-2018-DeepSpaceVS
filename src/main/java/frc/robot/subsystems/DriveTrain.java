@@ -68,6 +68,7 @@ public class DriveTrain extends Subsystem {
 
     /**sets up the motors for a driveTrain with all talons */
     public void initTalonDrive(){
+      
       left1 = new TalonSRX(RobotMap.leftT1);
       left2 = new TalonSRX(RobotMap.leftT2);
       left3 = new TalonSRX(RobotMap.leftT3);
@@ -76,6 +77,14 @@ public class DriveTrain extends Subsystem {
       right1 = new TalonSRX(RobotMap.rightT1);
       right2 = new TalonSRX(RobotMap.rightT2);
       right3 = new TalonSRX(RobotMap.rightT3);
+
+      left1.configFactoryDefault();
+      left2.configFactoryDefault();
+      left3.configFactoryDefault();
+      right1.configFactoryDefault();
+      right2.configFactoryDefault();
+      right3.configFactoryDefault();
+      
 
       right1.setInverted(true);
       right2.setInverted(true);
@@ -87,6 +96,8 @@ public class DriveTrain extends Subsystem {
       left3.follow(left1);
       right2.follow(right1);
       right3.follow(right1);
+
+      
 
     }
 
@@ -158,7 +169,7 @@ public void stop(){
       double I_Drive_HIGH = 1.0E-4;
       double D_Drive_HIGH = 0.11; // 0.11;
       double F_Drive_HIGH = 0.1042;
-      double targetSpeed_Drive_FAST = 8350;
+      double targetSpeed_Drive_FAST = 9200;///= 8350;
 
        PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
        PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);

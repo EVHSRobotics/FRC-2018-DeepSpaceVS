@@ -64,7 +64,7 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected boolean isFinished() {
    boolean isFinished = false;
-  if(Math.abs(elevator.getPos() - target) < 100)  isFinished = true;
+  if(Math.abs(elevator.getPos() - target) < 50)  isFinished = true;
   else isFinished = false;
 
   // elevator.isDone();

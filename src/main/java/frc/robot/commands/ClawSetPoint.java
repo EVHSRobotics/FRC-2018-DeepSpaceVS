@@ -46,6 +46,7 @@ public class ClawSetPoint extends Command {
     }else{
       isGoingDown = true;
       System.out.println("is going down is true");
+      
     }
 
     SmartDashboard.putBoolean("claw running: ", isFinished);

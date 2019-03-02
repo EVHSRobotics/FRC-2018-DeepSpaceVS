@@ -45,7 +45,7 @@ public class ElevatorDrive extends Command {
    // was .4
 		double multiplier = 1;
 		if (elevator.getPos() > 4000) {
-			elevator.setHoldVal(0);
+			elevator.setHoldVal(.17);
 		} else {
       elevator.setHoldVal(0);
     }

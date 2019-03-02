@@ -58,7 +58,8 @@ public class Elevator extends Subsystem {
 
 		// PIDTemplate.updatePID(talon, P, I, D, F, targetSpeed);
 
-		 startPos = masterTalon.getSelectedSensorPosition(0);
+     startPos = masterTalon.getSelectedSensorPosition(0);
+     masterTalon.configVoltageCompSaturation(12.0, 10);
   }
 
   // public void updateTargetSpeed(double targetSpeeD){

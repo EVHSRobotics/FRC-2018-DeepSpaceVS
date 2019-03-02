@@ -42,7 +42,7 @@ public class ClawDriver extends Command {
 
     
     
-   if(claw.getPos() > 90) holdVal = .15;
+   if(claw.getPos() > 90) holdVal = .18;
    else holdVal = 0;
     claw.drive( ControlMode.PercentOutput, value*.5 + holdVal);
     SmartDashboard.putNumber("Claw encoder: ", claw.getPos());

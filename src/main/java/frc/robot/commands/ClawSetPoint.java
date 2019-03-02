@@ -24,7 +24,7 @@ public class ClawSetPoint extends Command {
   boolean isFinished = false;
   double speed;
 
-  private boolean direction = true;
+  private boolean isGoingDown = true;
   public ClawSetPoint(double target) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -41,29 +41,34 @@ public class ClawSetPoint extends Command {
     claw = (Claw) Robot.getSubsystem(SubsystemNames.CLAW);
     startPos = claw.getPos();
     if(startPos < target){
-       direction = true;
+      isGoingDown = false;
+      System.out.println("is going down is false");
     }else{
-      direction = false;
+      isGoingDown = true;
+      System.out.println("is going down is true");
     }
 
     SmartDashboard.putBoolean("claw running: ", isFinished);
+
+    SmartDashboard.putNumber("claw target: ", target);
 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    speed = -.5;
+    //speed = .7;
 
-    if(direction) speed = .5;
+    if(isGoingDown) speed = -.3;
+    else speed = .7;
 
+    SmartDashboard.putBoolean("isGoingDown : " , isGoingDown);
 
 
     claw.drive(ControlMode.PercentOutput, speed);
 
     SmartDashboard.putString("claw start", "starting claw");
-    
-
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -72,9 +77,12 @@ public class ClawSetPoint extends Command {
    
     
 
-    if(Math.abs(claw.getPos() - target) < 50) isFinished = true;
-    if (OI.buttonT3.get())
-      isFinished = true;
+    if(Math.abs(claw.getPos() - target) < 50)  isFinished = true;
+    else isFinished = false;
+    if(Math.abs(claw.getPos()) > Math.abs(target)) isFinished = true;
+    if (OI.buttonX3.get()){
+     return true;
+    }
 
     return isFinished;
   }
@@ -90,6 +98,6 @@ public class ClawSetPoint extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    // claw.drive(ControlMode.PercentOutput, 0);
+     claw.drive(ControlMode.PercentOutput, 0);
   }
 }

@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ElevatorSetPoint;
 import frc.robot.commands.Extend1;
@@ -62,12 +63,14 @@ public class OI {
   public static JoystickButton buttonX2 = new JoystickButton(joyXBox, 2);
   public static JoystickButton buttonX3 = new JoystickButton(joyXBox, 3);
   public static JoystickButton buttonX4 = new JoystickButton(joyXBox, 4);
+  public static JoystickButton buttonDX1 = new JoystickButton(joyXBox, 1);
 
   public static JoystickButton buttonTh5 = new JoystickButton(joyThrottle, 5);
   public static JoystickButton buttonTh3 = new JoystickButton(joyThrottle, 3);
   public static JoystickButton buttonTh4 = new JoystickButton(joyThrottle, 4);
   public static JoystickButton buttonTh6 = new JoystickButton(joyThrottle, 6);
   
+
 
  
   static {

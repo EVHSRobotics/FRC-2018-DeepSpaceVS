@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -38,6 +39,8 @@ public class Claw extends Subsystem {
     masterTalon.setInverted(true);
     slave.setInverted(false);
     slave.follow(masterTalon);
+    masterTalon.setNeutralMode(NeutralMode.Brake);
+    slave.setNeutralMode(NeutralMode.Brake);
     resetEncoder();
 
 

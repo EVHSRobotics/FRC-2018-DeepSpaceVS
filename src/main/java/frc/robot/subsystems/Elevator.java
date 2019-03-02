@@ -26,7 +26,8 @@ public class Elevator extends Subsystem {
 
 	private double startPos;
 
-	private double targetSpeed = 0;
+  private double targetSpeed = 0;
+  private double holdValue = .19;
 //peal: 57483
   @Override
   public void initDefaultCommand() {
@@ -96,7 +97,22 @@ public class Elevator extends Subsystem {
   public double getVoltage(){
     return masterTalon.getBusVoltage();
   }
-  public void stop(){
+  
+
+  public void end(){
     drive(0, ControlMode.PercentOutput);
   }
+
+  public double getHoldVal(){
+    return holdValue;
+  }
+
+  public void setHoldVal(double hold){
+      holdValue = hold;
+  }
+
+  public boolean isDone() {
+		
+		return Math.abs(masterTalon.getSelectedSensorPosition(0) - masterTalon.getClosedLoopTarget(0)) < 100;
+	}
 }

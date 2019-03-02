@@ -18,6 +18,7 @@ import frc.robot.subsystems.SubsystemNames;
 
 public class ElevatorDrive extends Command {
   Elevator elevator;
+  double holdValue; 
   public ElevatorDrive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -41,17 +42,17 @@ public class ElevatorDrive extends Command {
     // }else{
     //   Robot.compressor.stop();
     // }
-    double holdValue = .15; // was .4
+   // was .4
 		double multiplier = 1;
-		// if (elevator.getPos() > -1500) {
-		// 	holdValue = 0;
-		// } else {
-		// 	//multiplier = .9;
-		// }
+		if (elevator.getPos() > 4000) {
+			elevator.setHoldVal(0);
+		} else {
+      elevator.setHoldVal(0);
+    }
     // elevator.drive(-(value * multiplier + holdValue), ControlMode.PercentOutput);
-    elevator.drive(value*.5 + holdValue, ControlMode.PercentOutput);
+    elevator.drive(value*.5 + elevator.getHoldVal(), ControlMode.PercentOutput);
     SmartDashboard.putNumber("Elevator encoder: ", elevator.getPos());
-    SmartDashboard.putNumber("Elevator voltage: ", elevator.getVoltage());
+    SmartDashboard.putNumber("Elevator throttle: ", value);
 
     
 

@@ -20,6 +20,7 @@ import frc.robot.subsystems.SubsystemNames;
 public class ElevatorSetPoint extends Command {
  private double target = 0;
  private double error = 0;
+ private double holdVal = 0;
 
  private Elevator elevator;
   public ElevatorSetPoint(double target) {
@@ -50,7 +51,8 @@ public class ElevatorSetPoint extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    elevator.drive(-.3, ControlMode.PercentOutput);
+    setHold(0);
+    elevator.drive(.5 + holdVal, ControlMode.PercentOutput);
    
     
   
@@ -62,8 +64,14 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected boolean isFinished() {
   boolean isFinished = false;
-   if(elevator.getPos() < target ) isFinished =  false;
-   else isFinished = true;
+   if(elevator.getPos() < target ){
+    isFinished =  false;
+    
+   } 
+   else{
+     setHold(.12);
+    isFinished = true;
+   }
    if(OI.buttonT3.get()) isFinished = true;
 
    return isFinished;
@@ -80,5 +88,8 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected void interrupted() {
     elevator.stop();
+  }
+  public void setHold(double hold){
+    holdVal = hold;
   }
 }

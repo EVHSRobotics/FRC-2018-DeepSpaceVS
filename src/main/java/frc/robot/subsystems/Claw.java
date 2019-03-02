@@ -23,7 +23,7 @@ public class Claw extends Subsystem {
   // here. Call these from Commands.
 
   TalonSRX masterTalon;
-  TalonSRX slave;
+  VictorSPX slave;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -33,10 +33,10 @@ public class Claw extends Subsystem {
 
   public Claw(){
     masterTalon = new TalonSRX(RobotMap.clawMaster);
-    slave = new TalonSRX(RobotMap.clawSlave);
+    slave = new VictorSPX(RobotMap.clawSlave);
 
     masterTalon.setInverted(true);
-
+    slave.setInverted(false);
     slave.follow(masterTalon);
     resetEncoder();
 

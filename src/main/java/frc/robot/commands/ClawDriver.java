@@ -38,8 +38,13 @@ public class ClawDriver extends Command {
   protected void execute() {
     double value = -OI.joyXBox.getRawAxis(5);
     value = Math.abs(value) < .05 ? 0 : value;
-   
-    claw.drive( ControlMode.PercentOutput, value*.5);
+    double holdVal = .12;
+
+    
+    
+   if(claw.getPos() > 90) holdVal = .15;
+   else holdVal = .12;
+    claw.drive( ControlMode.PercentOutput, value*.5 + holdVal);
     SmartDashboard.putNumber("Claw encoder: ", claw.getPos());
     SmartDashboard.putNumber("Claw voltage: ", claw.getBusVoltage());
   }

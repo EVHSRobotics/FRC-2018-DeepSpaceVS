@@ -24,12 +24,15 @@ public class Config {
 
     public static double jayMultipier = 1;
 
-    public static double elevatorHigh = 47000;
-    public static double elevatorMid = 24000;
-    public static double elevatorLow = 100;
+    public static double elevatorHigh = 56100;
+    public static double elevatorMid = 37000;
+    public static double elevatorLow = 13100;
+    public static double elevatorCargo = 38100;
     
 
-    public static double clawLow = 2376;
-
+   // public static double clawLow = 2376;
+    public static double clawZero =  -2582;
+    public static double claw90 = -122;
+    public static double clawClimb = -2875;
 
 }

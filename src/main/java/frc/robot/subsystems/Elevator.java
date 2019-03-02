@@ -42,6 +42,7 @@ public class Elevator extends Subsystem {
     slaveVic.follow(masterTalon);
 
     resetEncoder();
+   
 
 		// masterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		// masterTalon.setInverted(false);

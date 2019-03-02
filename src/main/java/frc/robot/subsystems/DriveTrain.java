@@ -50,9 +50,9 @@ public class DriveTrain extends Subsystem {
   public DriveTrain(){
       
 
-   // initTalonDrive();
-    initVictorDrive();
-      setNeutralMode(NeutralMode.Brake, false);
+    initTalonDrive();
+   // initVictorDrive();
+      setNeutralMode(NeutralMode.Brake, true);
 
 		  
 
@@ -77,9 +77,9 @@ public class DriveTrain extends Subsystem {
       right2 = new TalonSRX(RobotMap.rightT2);
       right3 = new TalonSRX(RobotMap.rightT3);
 
-      right1.setInverted(false);
-      right2.setInverted(false);
-      right3.setInverted(false);
+      right1.setInverted(true);
+      right2.setInverted(true);
+      right3.setInverted(true);
 
       
 
@@ -119,10 +119,10 @@ public class DriveTrain extends Subsystem {
    */
   public void drive(ControlMode mode, double left, double right){
    
-    if(mode.equals(ControlMode.Velocity) || mode.equals(ControlMode.MotionMagic)){
-      left *= getDriveConstant();
-      right *= getDriveConstant();
-    }
+    // if(mode.equals(ControlMode.Velocity) || mode.equals(ControlMode.MotionMagic)){
+    //   left *= getDriveConstant();
+    //   right *= getDriveConstant();
+    // }
 
     left1.set(mode, left);
     right1.set(mode, right);

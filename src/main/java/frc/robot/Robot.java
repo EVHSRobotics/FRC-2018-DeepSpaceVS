@@ -162,6 +162,8 @@ public class Robot extends TimedRobot {
     
     drive.applyShift("slow");
     drive.setJayMode(false);
+    claw.resetEncoder();
+    
     
   }
 

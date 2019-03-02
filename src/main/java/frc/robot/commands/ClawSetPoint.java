@@ -20,12 +20,18 @@ public class ClawSetPoint extends Command {
   private double target = 0;
   private double error = 0;
   Claw claw;
+  double startPos = 0;
+  boolean isFinished = false;
+  double speed;
 
+  private boolean direction = true;
   public ClawSetPoint(double target) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.target = target;
-
+  
+    
+    
   }
 
   // Called just before this Command runs the first time
@@ -33,28 +39,40 @@ public class ClawSetPoint extends Command {
   protected void initialize() {
 
     claw = (Claw) Robot.getSubsystem(SubsystemNames.CLAW);
+    startPos = claw.getPos();
+    if(startPos < target){
+       direction = true;
+    }else{
+      direction = false;
+    }
+
+    SmartDashboard.putBoolean("claw running: ", isFinished);
 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    speed = -.5;
 
-    claw.drive(ControlMode.PercentOutput, -.3);
+    if(direction) speed = .5;
 
-    SmartDashboard.putString("elevator start", "starting elevator");
+
+
+    claw.drive(ControlMode.PercentOutput, speed);
+
+    SmartDashboard.putString("claw start", "starting claw");
+    
 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean isFinished = false;
-    if (claw.getPos() < target)
-      isFinished = false;
-    else
-      isFinished = true;
-      
+   
+    
+
+    if(Math.abs(claw.getPos() - target) < 50) isFinished = true;
     if (OI.buttonT3.get())
       isFinished = true;
 
@@ -64,11 +82,14 @@ public class ClawSetPoint extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    
+    claw.drive(ControlMode.PercentOutput, 0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    // claw.drive(ControlMode.PercentOutput, 0);
   }
 }

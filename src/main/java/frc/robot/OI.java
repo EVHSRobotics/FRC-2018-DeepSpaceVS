@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ElevatorSetPoint;
 import frc.robot.commands.Extend1;
 import frc.robot.commands.Extend2;
@@ -61,6 +62,11 @@ public class OI {
   public static JoystickButton buttonX2 = new JoystickButton(joyXBox, 2);
   public static JoystickButton buttonX3 = new JoystickButton(joyXBox, 3);
   public static JoystickButton buttonX4 = new JoystickButton(joyXBox, 4);
+
+  public static JoystickButton buttonTh5 = new JoystickButton(joyThrottle, 5);
+  public static JoystickButton buttonTh3 = new JoystickButton(joyThrottle, 3);
+  public static JoystickButton buttonTh4 = new JoystickButton(joyThrottle, 4);
+  public static JoystickButton buttonTh6 = new JoystickButton(joyThrottle, 6);
   
 
  
@@ -70,7 +76,6 @@ public class OI {
 
      buttonT8.whenPressed(new ToggleShift());
 
-
     // button1.whenPressed(new DriveStraight(-Config.slowTarget/6, 70));
 
     
@@ -78,11 +83,17 @@ public class OI {
         buttonT1.whenPressed(new Extend1());
         buttonT4.whenPressed(new Extend2());
 
+       // buttonT3.whenPressed(new ClawSetPoint(Config.clawLow));
        
        
-        buttonX4.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
-        buttonX2.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
-        buttonX1.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+        buttonX4.whenPressed(new ClawSetPoint(Config.claw90));
+        buttonX2.whenPressed(new ClawSetPoint(Config.clawZero));
+        buttonX1.whenPressed(new ClawSetPoint(Config.clawClimb));
+
+        buttonTh5.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
+        buttonTh3.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
+        buttonTh4.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+        buttonTh6.whenPressed(new ElevatorSetPoint(Config.elevatorCargo));
 
 
      

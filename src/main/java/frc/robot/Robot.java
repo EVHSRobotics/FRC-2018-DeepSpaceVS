@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
   private Claw claw;
   private Intake intake;
   public static Compressor compressor;
+  JeVois camera;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -74,9 +75,12 @@ public class Robot extends TimedRobot {
      hatch = (Hatch)getSubsystem(SubsystemNames.HATCH);
      intake = (Intake)getSubsystem(SubsystemNames.INTAKE);
 
+
     sensors = new SensorBoard();
     compressor = new Compressor(0);
+    camera = new JeVois(true);
 
+    drive.resetEncoders();
     elevator.resetEncoder();
     claw.resetEncoder();
 

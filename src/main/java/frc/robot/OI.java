@@ -52,6 +52,7 @@ public class OI {
   public static Joystick joyThrottle = new Joystick(0);
   public static Joystick joyTurn = new Joystick(1);
   public static Joystick joyXBox = new Joystick(2);
+  public static Joystick joySet = new Joystick(3);
   public static JoystickButton buttonT8 = new JoystickButton(joyTurn, 8);
   public static JoystickButton buttonT7 = new JoystickButton(joyTurn, 7);
   public static JoystickButton buttonT1 = new JoystickButton(joyTurn , 1);
@@ -64,10 +65,15 @@ public class OI {
   public static JoystickButton buttonX3 = new JoystickButton(joyXBox, 3);
   public static JoystickButton buttonX4 = new JoystickButton(joyXBox, 4);
   public static JoystickButton buttonDX1 = new JoystickButton(joyXBox, 1);
+  public static JoystickButton buttonX5 = new JoystickButton(joyXBox, 5);
+  public static JoystickButton buttonX6 = new JoystickButton(joyXBox, 6);
 
-  public static JoystickButton buttonTh5 = new JoystickButton(joyThrottle, 5);
-  public static JoystickButton buttonTh3 = new JoystickButton(joyThrottle, 3);
-  public static JoystickButton buttonTh4 = new JoystickButton(joyThrottle, 4);
+  public static JoystickButton buttonTh5 = new JoystickButton(joySet, 2);
+  public static JoystickButton buttonTh3 = new JoystickButton(joySet, 3);
+  public static JoystickButton buttonTh4 = new JoystickButton(joySet, 4);
+
+
+  
   public static JoystickButton buttonTh6 = new JoystickButton(joyThrottle, 6);
   
 
@@ -83,20 +89,20 @@ public class OI {
 
     
 
-        buttonT1.whenPressed(new Extend1());
-        buttonT4.whenPressed(new Extend2());
+        buttonX5.whenPressed(new Extend1());
+        buttonX6.whenPressed(new Extend2());
 
        // buttonT3.whenPressed(new ClawSetPoint(Config.clawLow));
        
        
         buttonX4.whenPressed(new ClawSetPoint(Config.claw90));
         buttonX2.whenPressed(new ClawSetPoint(Config.clawZero));
-        buttonX1.whenPressed(new ClawSetPoint(Config.clawClimb));
+        //buttonX1.whenPressed(new ClawSetPoint(Config.clawClimb));
 
         buttonTh5.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
         buttonTh3.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
-        buttonTh4.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
-        buttonTh6.whenPressed(new ElevatorSetPoint(Config.elevatorCargo));
+        buttonX1.whenPressed(new ElevatorSetPoint(Config.elevatorHatchLow));
+        //buttonT6.whenPressed(new ElevatorSetPoint(Config.elevatorCargo));
 
 
      

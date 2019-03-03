@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -39,6 +40,9 @@ public class Elevator extends Subsystem {
   public Elevator(){
     masterTalon = new TalonSRX(RobotMap.elevatorMaster);
     slaveVic = new VictorSPX(RobotMap.elevatorSlave);
+    masterTalon.setNeutralMode(NeutralMode.Brake);   
+    slaveVic.setNeutralMode(NeutralMode.Brake);
+
 
     slaveVic.follow(masterTalon);
 
@@ -59,7 +63,8 @@ public class Elevator extends Subsystem {
 		// PIDTemplate.updatePID(talon, P, I, D, F, targetSpeed);
 
      startPos = masterTalon.getSelectedSensorPosition(0);
-     masterTalon.configVoltageCompSaturation(12.0, 10);
+     masterTalon.enableVoltageCompensation(true);
+     slaveVic.enableVoltageCompensation(true);
   }
 
   // public void updateTargetSpeed(double targetSpeeD){
@@ -101,7 +106,7 @@ public class Elevator extends Subsystem {
   
 
   public void end(){
-    drive(0, ControlMode.PercentOutput);
+    drive(.21, ControlMode.PercentOutput);
   }
 
   public double getHoldVal(){

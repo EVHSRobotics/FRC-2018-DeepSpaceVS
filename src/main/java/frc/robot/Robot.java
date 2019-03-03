@@ -181,6 +181,8 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putNumber("average encoders 1", drive.getAvgEncoders());
+    SmartDashboard.putNumber("drive left", drive.getLtEncoders());
+    SmartDashboard.putNumber("drive right", drive.getRtEncoders());
   }
 
   /**

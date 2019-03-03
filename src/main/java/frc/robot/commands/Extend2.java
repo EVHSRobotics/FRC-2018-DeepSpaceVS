@@ -24,7 +24,9 @@ public class Extend2 extends Command {
   protected void initialize() {
     hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
     System.out.println("shifting hatch 2");
-    hatch.toggleHatch2();
+    //hatch.toggleHatch2();
+    hatch.extendPunch();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run

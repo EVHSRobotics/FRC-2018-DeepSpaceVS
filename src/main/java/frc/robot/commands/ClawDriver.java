@@ -40,13 +40,14 @@ public class ClawDriver extends Command {
     value = Math.abs(value) < .05 ? 0 : value;
     double holdVal = .12;
 
+  if(claw.getPos() < -50){
+    claw.drive( ControlMode.PercentOutput, -.3);
+  }
     
-    
-   if(claw.getPos() > 90) holdVal = .18;
-   else holdVal = 0;
+   if(claw.getPos() < -2500) holdVal = .18;
+   
     claw.drive( ControlMode.PercentOutput, value*.5 + holdVal);
     SmartDashboard.putNumber("Claw encoder: ", claw.getPos());
-    SmartDashboard.putNumber("Claw voltage: ", claw.getBusVoltage());
   }
 
   // Make this return true when this Command no longer needs to run execute()

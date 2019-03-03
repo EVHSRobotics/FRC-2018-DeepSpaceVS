@@ -20,6 +20,7 @@ import frc.robot.subsystems.SubsystemNames;
 public class ElevatorSetPoint extends Command {
  private double target = 0;
  private double error = 0;
+ double speed = .75;
  
 
  private Elevator elevator;
@@ -52,8 +53,10 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected void execute() {
     
-    elevator.drive(.8, ControlMode.PercentOutput);
-   
+    elevator.drive(speed, ControlMode.PercentOutput);
+    if(Math.abs(elevator.getPos() - target) < 5500){
+      speed = .3;
+    }
     
   
   SmartDashboard.putString("elevator start", "starting elevator");
@@ -64,12 +67,12 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected boolean isFinished() {
    boolean isFinished = false;
-  if(Math.abs(elevator.getPos() - target) < 50)  isFinished = true;
+  if(Math.abs(elevator.getPos() - target) < 1500)  isFinished = true;
   else isFinished = false;
 
   // elevator.isDone();
 
-   if(OI.buttonT3.get()) isFinished = true;
+   if(OI.buttonX3.get()) isFinished = true;
 
    return isFinished;
   }

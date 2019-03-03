@@ -7,13 +7,14 @@
 
 package frc.robot.commands;
 
+import frc.robot.*;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Hatch;
-import frc.robot.*;
 import frc.robot.subsystems.SubsystemNames;
-public class Extend1 extends Command {
+
+public class RetractBar extends Command {
   Hatch hatch;
-  public Extend1() {
+  public RetractBar() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,20 +24,18 @@ public class Extend1 extends Command {
   protected void initialize() {
     hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
     System.out.println("shifting hatch");
-   // hatch.toggleHatch1();
-    hatch.extendPunch();
+    hatch.retractBar();
+    
   }
-
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

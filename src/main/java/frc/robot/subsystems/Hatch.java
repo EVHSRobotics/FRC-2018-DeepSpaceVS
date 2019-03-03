@@ -20,7 +20,8 @@ import frc.robot.commands.HatchDrive;
 public class Hatch extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  DoubleSolenoid extend1, extend2;
+  DoubleSolenoid extend1, extend2; //extend1 -> bar extend2 -> push
+
   boolean isExtend1 = false;
   boolean isExtend2 = false;
 
@@ -34,6 +35,7 @@ public class Hatch extends Subsystem {
   public Hatch(){
     extend1 = new DoubleSolenoid(RobotMap.hatchExtend1, RobotMap.hatchExtend2);
     extend2 = new DoubleSolenoid(RobotMap.hatchExtend1_1, RobotMap.hatchExtend2_2);
+    writeToDashboard();
   }
 
   public void extend1(){
@@ -58,4 +60,34 @@ public class Hatch extends Subsystem {
     else if(!isExtend2) extend2.set(Value.kReverse);
     isExtend2 = !isExtend2;
   }
+
+  public void extendBar(){
+    System.out.println("extending bar");
+    if(!isExtend1) extend1.set(Value.kForward);
+    isExtend1 = true;
+  }
+
+  public void retractBar(){
+    System.out.println("retracting bar");
+    if(isExtend1) extend1.set(Value.kReverse);
+    isExtend1 = false;
+  }
+
+  public void extendPunch(){
+    System.out.println("extending punch");
+    if(!isExtend2) extend2.set(Value.kForward);
+    isExtend2 = true;
+  }
+
+  public void retractPunch(){
+    System.out.println("retracting punch");
+    if(isExtend2) extend2.set(Value.kReverse);
+    isExtend2 = false;
+  }
+
+  public void writeToDashboard(){
+    SmartDashboard.putBoolean("bar extended: ", isExtend1);
+    SmartDashboard.putBoolean("punch extend: ", isExtend2);
+  }
 }
+

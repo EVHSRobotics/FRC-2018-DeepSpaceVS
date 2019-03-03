@@ -45,12 +45,13 @@ public class ElevatorDrive extends Command {
    // was .4
 		double multiplier = 1;
 		if (elevator.getPos() > 4000) {
-			elevator.setHoldVal(.17);
-		} else {
+			elevator.setHoldVal(.2);
+    } 
+    else {
       elevator.setHoldVal(0);
     }
     // elevator.drive(-(value * multiplier + holdValue), ControlMode.PercentOutput);
-    elevator.drive(value*.5 + elevator.getHoldVal(), ControlMode.PercentOutput);
+    elevator.drive(value*.5 + .1, ControlMode.PercentOutput);
     SmartDashboard.putNumber("Elevator encoder: ", elevator.getPos());
     SmartDashboard.putNumber("Elevator throttle: ", value);
 

@@ -7,36 +7,41 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.Hatch;
-import frc.robot.*;
+import frc.robot.OI;
+import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SubsystemNames;
-public class Extend1 extends Command {
-  Hatch hatch;
-  public Extend1() {
+public class In extends Command {
+  Intake intake;
+  double speed;
+  public In(double value) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.getSubsystem(SubsystemNames.INTAKE));
+    speed = value;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
-    System.out.println("shifting hatch");
-   // hatch.toggleHatch1();
-    hatch.extendPunch();
+    intake = (Intake) Robot.getSubsystem(SubsystemNames.INTAKE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+
+    intake.drive(ControlMode.PercentOutput, speed);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

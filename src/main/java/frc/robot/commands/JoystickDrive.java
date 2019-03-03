@@ -37,21 +37,18 @@ public class JoystickDrive extends Command {
     double smallTurn = OI.joyThrottle.getRawAxis(2);
   //  turn = turn < 0.1 ? turn : 0;
 
-  if(drive.getJayMode()) Config.jayMultipier = 0.3;
-  else Config.jayMultipier = 1;
+  Config.jayMultipier = 1;
   
     if(OI.button2.get()){ 
 
       drive.setTurnMultiplier(.4);
     
-     // SmartDashboard.putNumber("small", small)
       SmartDashboard.putNumber("small turn curve", turnCurve(smallTurn));
-   //  System.out.println("small turn " + Math.random());
-      drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * turnCurve(smallTurn)), sig(throttle + Config.turnMultiplier * turnCurve(smallTurn)));
+      drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(smallTurn), sig(throttle) + Config.turnMultiplier * turnCurve(smallTurn));
     }else { 
 
       drive.setTurnMultiplier(1);
-      drive.drive(ControlMode.PercentOutput, sig(throttle - Config.turnMultiplier * turnCurve(turn)), sig(throttle + Config.turnMultiplier * turnCurve(turn)));
+      drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(turn), sig(throttle) + Config.turnMultiplier * turnCurve(turn));
     }
   
    SmartDashboard.putNumber("throttle", throttle);
@@ -69,7 +66,7 @@ public class JoystickDrive extends Command {
 	}
 
 	public double sig(double val) {
-		return (2 / (1 + Math.pow(Math.E, -7 * Math.pow(val, 3))) - 1)/2;
+		return (2 / (1 + Math.pow(Math.E, -7 * Math.pow(val, 3))) - 1);
 	}
   
   /**

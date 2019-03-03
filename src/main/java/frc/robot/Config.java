@@ -28,6 +28,8 @@ public class Config {
     public static double elevatorMid = 37000;
     public static double elevatorLow = 5000;//13100;
     public static double elevatorCargo = 38100;
+
+    public static double elevatorHatchLow = 10000;
     
 
    // public static double clawLow = 2376;

@@ -41,7 +41,7 @@ public class JoystickDrive extends Command {
   
     if(OI.button2.get()){ 
 
-      drive.setTurnMultiplier(.4);
+      drive.setTurnMultiplier(.2);
     
       SmartDashboard.putNumber("small turn curve", turnCurve(smallTurn));
       drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(smallTurn), sig(throttle) + Config.turnMultiplier * turnCurve(smallTurn));

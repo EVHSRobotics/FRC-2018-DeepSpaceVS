@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
@@ -161,11 +162,12 @@ public class Robot extends TimedRobot {
     }
 
    
+   
     drive.resetEncoders();
     elevator.resetEncoder();
     
     drive.applyShift("slow");
-    drive.setJayMode(false);
+
     claw.resetEncoder();
     
     

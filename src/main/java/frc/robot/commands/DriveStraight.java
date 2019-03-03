@@ -42,8 +42,10 @@ public class DriveStraight extends Command {
    
 		drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
     drive.resetEncoders();
-    this.distance = Config.cyclesToInchesFactor * ogDistance;
+		//this.distance = Config.cyclesToInchesFactor * ogDistance;
+		this.distance = ogDistance;
 		startingDistance = drive.getAvgEncoders();
+		
     drive.setNeutralMode(NeutralMode.Brake, true);
     
    
@@ -54,7 +56,7 @@ public class DriveStraight extends Command {
 	//	double angle = Robot.getSensors().getNavX().getAngle();
   //	double diff = (heading - angle) / 90;
     
-    drive.drive(ControlMode.Velocity, speed, speed);
+    drive.drive(ControlMode.PercentOutput, speed, speed);
     
   }
   

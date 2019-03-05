@@ -38,7 +38,7 @@ public class DriveHeading extends Command {
     drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
     distance = Config.cyclesToInchesFactor * ogDistance;
     startingDistance = drive.getAvgEncoders();
-    drive.setNeutralMode(NeutralMode.Brake, true);
+    drive.setNeutralMode(NeutralMode.Brake);
   }
 
   // Called repeatedly when this Command is scheduled to run

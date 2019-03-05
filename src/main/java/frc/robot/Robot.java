@@ -169,6 +169,7 @@ public class Robot extends TimedRobot {
     drive.applyShift("slow");
 
     claw.resetEncoder();
+    Robot.getSensors().getNavX().reset();
     
     
   }

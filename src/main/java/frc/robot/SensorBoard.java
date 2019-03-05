@@ -10,6 +10,7 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
 import edu.wpi.first.wpilibj.I2C;
@@ -32,13 +33,14 @@ public class SensorBoard {
 
         if(ultra.isRangeValid()) ultra.getRangeInches();
 
-        navX = new AHRS(I2C.Port.kMXP);
+        navX = new AHRS(Port.kUSB1);
 
         drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
 
     }
 
     public AHRS getNavX() {
+        System.out.println("getting navX");
 		return navX;
 	}
 

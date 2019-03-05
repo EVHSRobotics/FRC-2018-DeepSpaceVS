@@ -40,14 +40,21 @@ public class ClawSetPoint extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(target < claw.getPos()){
-        claw.drive(ControlMode.PercentOutput, -.3);
-    }
-    else if(target > claw.getPos()){
-      claw.drive(ControlMode.PercentOutput, .3);
+    // if(target < claw.getPos()){
+    // claw.drive(ControlMode.PercentOutput, -.3);
+    // }
+    // else{
+    // claw.drive(ControlMode.PercentOutput, .3);
+    // direction = false;
+    // }
+
+    if (target < claw.getPos()) {
+      //claw.drive(ControlMode.PercentOutput, -1 * Math.abs(target - claw.getPos()) / 2000);
+    } else { // was 2000 COMP
+      //claw.drive(ControlMode.PercentOutput, .45); // was .35 COMP
       direction = false;
     }
-    SmartDashboard.putString("claw start", "starting elevator");
+    SmartDashboard.putString("claw start", "starting claw");
 
   }
 
@@ -55,20 +62,21 @@ public class ClawSetPoint extends Command {
   @Override
   protected boolean isFinished() {
     boolean isFinished = false;
-    if(direction){
-    if (claw.getPos() > target)
-      isFinished = false;
-    else if (claw.getPos() < target){
-      isFinished = false;
-    }
-    }
-    else
-      isFinished = true;
-      
-    if (OI.buttonT3.get())
-      isFinished = true;
+    // if(direction){
+    // if (claw.getPos() > target)
+    // isFinished = false;
+    // else if (claw.getPos() < target){
+    // isFinished = false;
+    // }
+    // }
+    // else
+    // isFinished = true;
 
-    return isFinished;
+    if (OI.XWheel.get())
+      return true;
+
+    return Math.abs(target - claw.getPos()) < 350;
+
   }
 
   // Called once after isFinished returns true
@@ -82,5 +90,6 @@ public class ClawSetPoint extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    claw.drive(ControlMode.PercentOutput, 0);
   }
 }

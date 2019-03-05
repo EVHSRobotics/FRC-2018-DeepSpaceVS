@@ -47,8 +47,13 @@ public class Claw extends Subsystem {
   }
 
   public void drive( ControlMode mode, double value){
+    if (getPos() > -400) {
+		//	value = .75;
+		}
     masterTalon.set(mode, value);
+    slave.set(mode, value);
   }
+  
   public void resetEncoder() {
     //startPos = masterTalon.getSelectedSensorPosition(0);
     masterTalon.setSelectedSensorPosition(0);
@@ -73,6 +78,11 @@ public class Claw extends Subsystem {
 
   public void stop(){
     drive(ControlMode.PercentOutput, 0);
+  }
+  public boolean isDone(double target){
+    System.out.println("Current pos: " + masterTalon.getSelectedSensorPosition(0) + " target: "
+				+ target);
+		return Math.abs(masterTalon.getSelectedSensorPosition(0) - target) < 50;
   }
 
 

@@ -36,6 +36,7 @@ public class DriveTrain extends Subsystem {
   Value fast = Value.kForward;
   Value slow = Value.kReverse;
   boolean isFast = false;
+  boolean allTalons;
   private String gearState;
 
   boolean jayMode = false;
@@ -52,7 +53,7 @@ public class DriveTrain extends Subsystem {
 
     initTalonDrive();
    // initVictorDrive();
-      setNeutralMode(NeutralMode.Brake, true);
+      setNeutralMode(NeutralMode.Brake);
 
 		  
 
@@ -97,6 +98,7 @@ public class DriveTrain extends Subsystem {
       right2.follow(right1);
       right3.follow(right1);
 
+      allTalons = true;
       
 
     }
@@ -119,6 +121,8 @@ public class DriveTrain extends Subsystem {
       v_left3.follow(left1);
       v_right2.follow(right1);
       v_right3.follow(right1);
+      
+      allTalons = false;
 
     }
 /**
@@ -191,7 +195,7 @@ public void stop(){
   }
 
   /** set mode of talons*/
-  public void setNeutralMode(NeutralMode mode, boolean allTalons){
+  public void setNeutralMode(NeutralMode mode){
     if(allTalons){
       left1.setNeutralMode(mode);
       left2.setNeutralMode(mode);
@@ -210,6 +214,11 @@ public void stop(){
 
 
   }
+
+  public double inchesToCycles(double d) { // TODO finish this
+		return (d + .997) / 6.96d;
+	}
+
    /** get right value encoders */
    public int getRtEncoders() {
     return right1.getSelectedSensorPosition(0);
@@ -246,12 +255,7 @@ public void stop(){
   public String getGearState(){
     return gearState;
   }
-  
-  public void setJayMode(boolean jayMode){
-    this.jayMode = jayMode;
-  }
+ 
 
-  public boolean getJayMode(){
-    return jayMode;
-  }
+  
 }

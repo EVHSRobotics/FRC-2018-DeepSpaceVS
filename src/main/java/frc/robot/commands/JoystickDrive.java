@@ -39,7 +39,7 @@ public class JoystickDrive extends Command {
 
   Config.jayMultipier = 1;
   
-    if(OI.button2.get()){ 
+    if(OI.thumbButton.get()){ 
 
       drive.setTurnMultiplier(.2);
     

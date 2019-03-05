@@ -33,10 +33,10 @@ public class DriveCargoBayRight extends CommandGroup {
     // arm.y
     System.out.println("running auto");
     addSequential(new DriveStraight(-.4, 70000));
-    Timer.delay(1);
+   
   
-    addSequential(new Turn(false, true, 5500, 0.5));
-    // Timer.delay(1);
+    addSequential(new GyroTurn(110, false, .9));
+     Timer.delay(1);
     // addSequential(new DriveStraight(.5,  13648));
     
   }

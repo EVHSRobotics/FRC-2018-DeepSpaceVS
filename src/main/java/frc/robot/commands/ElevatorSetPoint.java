@@ -72,7 +72,7 @@ public class ElevatorSetPoint extends Command {
 
   // elevator.isDone();
 
-   if(OI.buttonX3.get()) isFinished = true;
+   if(OI.XWheel.get()) isFinished = true;
 
    return isFinished;
   }

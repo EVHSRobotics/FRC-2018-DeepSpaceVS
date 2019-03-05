@@ -46,7 +46,7 @@ public class DriveStraight extends Command {
 		this.distance = ogDistance;
 		startingDistance = drive.getAvgEncoders();
 		
-    drive.setNeutralMode(NeutralMode.Brake, true);
+    drive.setNeutralMode(NeutralMode.Brake);
     
    
 	}

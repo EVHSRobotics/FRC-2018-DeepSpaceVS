@@ -5,18 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.drivePaths;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.Timer;
+import frc.robot.commands.ClawSetPoint;
+import frc.robot.commands.DriveStraight;
+import frc.robot.Config;
 
-public class DriveCargoBayRight extends CommandGroup {
+import frc.robot.commands.ElevatorSetPoint;
+import frc.robot.commands.GyroTurn;
+import frc.robot.commands.In;
+
+public class DriveCargoBayLeft extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public DriveCargoBayRight() {
+  public DriveCargoBayLeft() {
     // Add Commands here:
-    //urn e.g. addSequential(new Command1());
+    // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
 
@@ -30,15 +36,15 @@ public class DriveCargoBayRight extends CommandGroup {
     // would require.
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
-    // arm.y
+    // arm.
+
     System.out.println("running auto");
+    addSequential(new ClawSetPoint(Config.claw90));
     addSequential(new DriveStraight(-.4, 70000));
-   
+    addSequential(new GyroTurn(110, true, .9));
+    addSequential(new DriveStraight(.5,  13648));
   
-    addSequential(new GyroTurn(110, false, .9));
-     Timer.delay(1);
-    // addSequential(new DriveStraight(.5,  13648));
-    
+    addSequential(new ElevatorSetPoint(Config.elevatorCargo)); //TODO get encoder value for this pos
+  //  addSequential(new In(.8)); //use banner to determine when to stop intake
   }
-  
 }

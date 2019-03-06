@@ -33,7 +33,7 @@ public class Config {
     
 
    // public static double clawLow = 2376;
-    public static double clawZero =  -2700;
+    public static double clawZero =  -2000;
     public static double claw90 = -400;
     public static double clawClimb = -1500;
 

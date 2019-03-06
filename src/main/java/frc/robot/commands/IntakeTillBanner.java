@@ -9,82 +9,70 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Config;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Claw;
+import frc.robot.SensorBoard;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SubsystemNames;
 
-public class ClawDriver extends Command {
-  Claw claw;
-  double speed;
-  double holdVal;
-
-  public ClawDriver() {
+public class IntakeTillBanner extends Command {
+  private SensorBoard board;
+  private double  speed;
+  private boolean bannerDetected;
+	private Intake intake;
+	private long startTime;
+  private boolean shouldTimeOut;
+  private boolean trigger;
+  private DigitalInput banner;
+	
+  public IntakeTillBanner(boolean trigger, double speed, boolean shouldTimeOut) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.getSubsystem(SubsystemNames.CLAW));
-
+    this.speed = speed;
+    this.trigger = trigger;
+    this.shouldTimeOut = shouldTimeOut;
+   // this.board = Robot.getSensors();
+    banner = new DigitalInput(0);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    claw = (Claw) Robot.getSubsystem(SubsystemNames.CLAW);
-
+    intake = (Intake)Robot.getSubsystem(SubsystemNames.INTAKE);
+    startTime = System.nanoTime();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double value = -OI.joyXBox.getRawAxis(5);
-    value = Math.abs(value) < .05 ? 0 : value;
-
-  //default hold with ball
-  
-    if(claw.getPos() < -300){
-      holdVal = .10;
-    }
-   // holdVal = .16;
-    if(claw.getPos() < -1000){ //increase hold value as claw passes mid angle
-      holdVal = .15;
-    }
-   
-    if(claw.getPos() < -2700){
-      holdVal = .18;
-    }
-    value = value*.5 + holdVal;
-    System.out.println("claw value: " + value);
-    claw.drive(ControlMode.PercentOutput, value);
-     //if not past limits
-    //  if (claw.getPos() < -50) {
-    //   holdVal = .16;
-
-    // }
-   
-    SmartDashboard.putNumber("Claw encoder: ", claw.getPos());
+    intake.drive(ControlMode.PercentOutput, speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if((banner.get() == false)) {
+      System.out.println("Finishing due to ultra trigger");
+    }
+    if((shouldTimeOut && (System.nanoTime() - startTime)/1E9d > 5)) {
+      System.out.println("Finishing due to time out");
+    }
+      return (banner.get() == false) || (shouldTimeOut && (System.nanoTime() - startTime)/1E9d > 5);
+  
+    
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    claw.drive( ControlMode.PercentOutput, 0);
-    }
+    intake.stop();
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    claw.drive( ControlMode.PercentOutput, 0);
-
   }
 }

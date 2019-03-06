@@ -47,9 +47,11 @@ public class Claw extends Subsystem {
   }
 
   public void drive( ControlMode mode, double value){
-    if (getPos() > -400) {
-		//	value = .75;
-		}
+    if (getPos() > -330) {
+        value = -.1;
+    }
+   
+
     masterTalon.set(mode, value);
     slave.set(mode, value);
   }

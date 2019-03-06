@@ -18,13 +18,14 @@ import frc.robot.subsystems.SubsystemNames;
 
 public class ClawSetPoint extends Command {
   private double target = 0;
-  private double error = 0;
+  private double error = 50;
   Claw claw;
   boolean direction = true;
 
   public ClawSetPoint(double target) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+   // requires(Robot.getSubsystem(SubsystemNames.CLAW));
     this.target = target;
 
   }
@@ -39,19 +40,19 @@ public class ClawSetPoint extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    // if(target < claw.getPos()){
-    // claw.drive(ControlMode.PercentOutput, -.3);
-    // }
-    // else{
-    // claw.drive(ControlMode.PercentOutput, .3);
-    // direction = false;
-    // }
+   protected void execute() {
+  //   if(target < claw.getPos()){
+  //   claw.drive(ControlMode.PercentOutput, -.3);
+  //   }
+  //   else{
+  //   claw.drive(ControlMode.PercentOutput, .3);
+  //   direction = false;
+  //   }
 
     if (target < claw.getPos()) {
-      //claw.drive(ControlMode.PercentOutput, -1 * Math.abs(target - claw.getPos()) / 2000);
+      claw.drive(ControlMode.PercentOutput, -.2);
     } else { // was 2000 COMP
-      //claw.drive(ControlMode.PercentOutput, .45); // was .35 COMP
+      claw.drive(ControlMode.PercentOutput, .45); // was .35 COMP
       direction = false;
     }
     SmartDashboard.putString("claw start", "starting claw");

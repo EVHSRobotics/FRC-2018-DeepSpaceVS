@@ -10,12 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commands.ClawSetPoint;
-import frc.robot.commands.DriveCargoBayRight;
+import frc.robot.commands.AutoIntake;
 import frc.robot.commands.ElevatorSetPoint;
 import frc.robot.commands.Extend1;
 import frc.robot.commands.Extend2;
 import frc.robot.commands.ToggleShift;
+import frc.robot.drivePaths.DriveCargoBayRight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -111,6 +111,7 @@ public class OI {
 
     // dUP.whenPressed(new ClawSetPoint(Config.claw90));
     // dLEFT.whenPressed(new ClawSetPoint(-700));
+    ABox.whenPressed(new AutoIntake());
 
 
     XWheel.whenPressed(new DriveCargoBayRight());

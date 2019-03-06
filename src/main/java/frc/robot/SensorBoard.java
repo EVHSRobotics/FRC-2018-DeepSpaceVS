@@ -9,11 +9,11 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
-import edu.wpi.first.wpilibj.I2C;
 
 /**
  * Add your docs here.
@@ -21,22 +21,25 @@ import edu.wpi.first.wpilibj.I2C;
 public class SensorBoard {
     private AHRS navX;
     private Ultrasonic ultra;
+    private DigitalInput banner;
     private DriveTrain drive;
 
     private double ultraRange = -1;
     private boolean ultraRunning = true;
+    
 
     public SensorBoard(){
-        ultra = new Ultrasonic(1,0);
-        ultra.setEnabled(true);
-        ultra.ping();
+        // ultra = new Ultrasonic(1,0);
+        // ultra.setEnabled(true);
+        // ultra.ping();
 
-        if(ultra.isRangeValid()) ultra.getRangeInches();
+       // if(ultra.isRangeValid()) ultra.getRangeInches();
 
         navX = new AHRS(Port.kUSB1);
 
         drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
 
+        //banner = new DigitalInput(0);
     }
 
     public AHRS getNavX() {
@@ -44,11 +47,19 @@ public class SensorBoard {
 		return navX;
 	}
 
-    public Ultrasonic getUltra(){
-        return ultra;
-    }
+    // public Ultrasonic getUltra(){
+    //     return ultra;
+    // }
 	public double getUltraDistance() {
 		return ultraRange;
 	}
+
+    // public DigitalInput getBanner() {
+	// 	return banner;
+    // }
+    
+    public boolean hasBannerDetected(){
+        return banner.get();
+    }
 
 }

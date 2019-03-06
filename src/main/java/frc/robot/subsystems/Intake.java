@@ -21,9 +21,11 @@ public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  boolean runIntakeAuto;
   VictorSPX victor;
   public Intake(){
     victor = new VictorSPX(RobotMap.intakeMaster);
+    runIntakeAuto = false;
   }
   @Override
   public void initDefaultCommand() {
@@ -38,5 +40,13 @@ public class Intake extends Subsystem {
 
   public void stop(){
     drive(ControlMode.PercentOutput, 0);
+  }
+
+  public boolean getShouldIntakeAutoRun(){
+    return runIntakeAuto;
+  }
+
+  public void setIntakeAutoRun(boolean setIntakeAuto){
+    runIntakeAuto = setIntakeAuto;
   }
 }

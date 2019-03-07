@@ -7,35 +7,36 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
-public class IntakeDriver extends Command {
-  Intake intake;
-  public IntakeDriver() {
+
+public class CameraToggle extends Command {
+  DriveTrain drive;
+  public CameraToggle() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.getSubsystem(SubsystemNames.INTAKE));
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    intake = (Intake) Robot.getSubsystem(SubsystemNames.INTAKE);
+    drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double value = OI.joyXBox.getRawAxis(3) - OI.joyXBox.getRawAxis(2);
-
-
-    intake.drive(ControlMode.PercentOutput, value*1.1);
-
+    if(drive.getCamera1Run()){
+      Robot.getCam1().start();
+      drive.setCamera1(false);
+    }else{
+      Robot.getCam1().stop();
+      Robot.getCam2().start();
+      drive.setCamera1(true);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

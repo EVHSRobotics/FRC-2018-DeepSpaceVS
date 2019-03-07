@@ -9,6 +9,7 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -50,7 +51,9 @@ public class Robot extends TimedRobot {
   private Claw claw;
   private Intake intake;
   public static Compressor compressor;
-  JeVois camera;
+  public static JeVois camera1;
+  public static JeVois camera2;
+  boolean runCam1;
 
 
 
@@ -81,11 +84,15 @@ public class Robot extends TimedRobot {
 
     sensors = new SensorBoard();
     compressor = new Compressor(0);
-    camera = new JeVois(true);
-
+    
+    camera1 = new JeVois(true, 320, 240, 29, 1180, 0);
+    camera1.start();
+    //camera2 = new JeVois(true, 320, 240, 30, 1181, 0);
+   
     drive.resetEncoders();
     elevator.resetEncoder();
     claw.resetEncoder();
+   
 
     
   }
@@ -192,6 +199,29 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("average encoders 1", drive.getAvgEncoders());
     SmartDashboard.putNumber("drive left", drive.getLtEncoders());
     SmartDashboard.putNumber("drive right", drive.getRtEncoders());
+
+    // if(OI.bottomLeft.get()){
+      
+    //   System.out.println("switching camera: ");
+    //   SmartDashboard.putString("camear start", "starting camera 2");
+    //   // camera1.getUSUsbCamera().setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    //   // camera2.getUSUsbCamera().setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+      
+    //   if(runCam1 == false){
+    //     camera1.getCamServer().setSource(camera2.getUSUsbCamera());
+       
+    //   }else{
+    //     camera1.getCamServer().setSource(camera1.getUSUsbCamera());
+    //   }
+    //   runCam1 = !runCam1;
+    //   // }else{
+    //   //   camera1.getCamServer().setSource(camera1.getUSUsbCamera());
+    //   //   runCam1 = false;
+    //   // }
+
+    // }
+
+    //SmartDashboard.putBoolean("banner: ", getSensors().getBanner().get());
   }
 
   /**
@@ -207,5 +237,13 @@ public class Robot extends TimedRobot {
 
   public static SensorBoard getSensors(){
     return sensors;
+  }
+
+  public static JeVois getCam1(){
+    return camera1;
+  }
+
+  public static JeVois getCam2(){
+    return camera2;
   }
 }

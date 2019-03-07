@@ -45,8 +45,8 @@ public class ClawDriver extends Command {
 
   //default hold with ball
   
-    if(claw.getPos() < -300){
-      holdVal = .10;
+    if(claw.getPos() < -370){
+      holdVal = .11;
     }
    // holdVal = .16;
     if(claw.getPos() < -1000){ //increase hold value as claw passes mid angle

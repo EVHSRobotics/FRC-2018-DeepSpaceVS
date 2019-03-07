@@ -38,6 +38,7 @@ public class DriveTrain extends Subsystem {
   boolean isFast = false;
   boolean allTalons;
   private String gearState;
+  boolean camera1 = true;
 
   boolean jayMode = false;
   @Override
@@ -254,6 +255,14 @@ public void stop(){
   
   public String getGearState(){
     return gearState;
+  }
+
+  public void setCamera1(boolean shouldRun){
+    camera1 = shouldRun;
+  }
+
+  public boolean getCamera1Run(){
+    return camera1;
   }
  
 

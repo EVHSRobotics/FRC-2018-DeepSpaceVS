@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -39,7 +40,11 @@ public class SensorBoard {
 
         drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
 
-        //banner = new DigitalInput(0);
+        // try{
+        //     banner = new DigitalInput(0);
+        // }catch(UncleanStatusException e){
+        //     System.out.println(e.getMessage());
+        // }
     }
 
     public AHRS getNavX() {
@@ -54,12 +59,12 @@ public class SensorBoard {
 		return ultraRange;
 	}
 
-    // public DigitalInput getBanner() {
-	// 	return banner;
-    // }
+    //  public DigitalInput getBanner() {
+	//  	return banner;
+    //  }
     
-    public boolean hasBannerDetected(){
-        return banner.get();
-    }
+    // public boolean hasBannerDetected(){
+    //     return banner.get();
+    // }
 
 }

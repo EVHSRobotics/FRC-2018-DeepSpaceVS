@@ -32,10 +32,10 @@ public class AutoIntake extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     addSequential(new ClawSetPoint(Config.clawZero));
-    addParallel(new IntakeTillBanner(true, .6, true));
-    addSequential(new InTimed(2, .6));
+    addParallel(new IntakeTillBanner(true, .8, true));
+    addSequential(new InTimed(2, .8));
     addSequential(new ClawSetPoint(Config.claw90));
-    addSequential(new IntakeTillBanner(true, -.6, true));
+ ///   addSequential(new IntakeTillBanner(true, -.6, true));
 
 
 

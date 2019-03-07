@@ -17,23 +17,25 @@ public class Config {
 
     public static double elevatorUpSpeed = 0;
     public static double elevatorDownSpeed = 0;
-    
+
     public static double cyclesToInchesFactor = 588.77;
 
     public static double turnMultiplier = 1;
 
     public static double jayMultipier = 1;
 
-    public static double elevatorHigh = 56100;
+    public static double elevatorHigh= 56100;
     public static double elevatorMid = 37000;
-    public static double elevatorLow = 5000;//13100;
-    public static double elevatorCargo = 38100;
+    public static double elevatorLow = 5000;// 13100;
 
-    public static double elevatorHatchLow = 10000;
+    public static double elevatorHighHatch = 55000;
+    public static double elevatorMidHatch = 35000;
+    public static double elevatorLowHatch = 4000;// 13100;
+    
     
 
-   // public static double clawLow = 2376;
-    public static double clawZero =  -2000;
+   
+    public static double clawZero = -2000;
     public static double claw90 = -400;
     public static double clawClimb = -1500;
 

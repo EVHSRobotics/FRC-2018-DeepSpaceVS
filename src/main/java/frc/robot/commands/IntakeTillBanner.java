@@ -32,7 +32,7 @@ public class IntakeTillBanner extends Command {
     this.speed = speed;
     this.trigger = trigger;
     this.shouldTimeOut = shouldTimeOut;
-   // this.board = Robot.getSensors();
+    this.board = Robot.getSensors();
     banner = new DigitalInput(0);
     
   }
@@ -53,13 +53,14 @@ public class IntakeTillBanner extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if((banner.get() == false)) {
-      System.out.println("Finishing due to ultra trigger");
-    }
+    // if((banner.get() == false)) {
+    //   System.out.println("Finishing due to ultra trigger");
+    // }
     if((shouldTimeOut && (System.nanoTime() - startTime)/1E9d > 5)) {
       System.out.println("Finishing due to time out");
     }
-      return (banner.get() == false) || (shouldTimeOut && (System.nanoTime() - startTime)/1E9d > 5);
+     // return (banner.get() == false) || 
+      return (shouldTimeOut && (System.nanoTime() - startTime)/1E9d > 5);
   
     
   }

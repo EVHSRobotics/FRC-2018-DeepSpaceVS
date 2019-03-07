@@ -47,8 +47,8 @@ public class Claw extends Subsystem {
   }
 
   public void drive( ControlMode mode, double value){
-    if (getPos() > -330) {
-        value = -.1;
+    if (getPos() > -390) {
+        value = -.08;
     }
    
 

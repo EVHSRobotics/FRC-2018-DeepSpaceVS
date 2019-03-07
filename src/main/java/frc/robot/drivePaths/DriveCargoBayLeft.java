@@ -44,7 +44,7 @@ public class DriveCargoBayLeft extends CommandGroup {
     addSequential(new GyroTurn(110, true, .9));
     addSequential(new DriveStraight(.5,  13648));
   
-    addSequential(new ElevatorSetPoint(Config.elevatorCargo)); //TODO get encoder value for this pos
+    addSequential(new ElevatorSetPoint(Config.elevatorLow)); //TODO get encoder value for this pos
   //  addSequential(new In(.8)); //use banner to determine when to stop intake
   }
 }

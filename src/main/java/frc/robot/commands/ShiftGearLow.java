@@ -12,9 +12,9 @@ import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
 
-public class ToggleShift extends Command {
+public class ShiftGearLow extends Command {
   DriveTrain drive;
-  public ToggleShift() {
+  public ShiftGearLow() {
    
   }
 
@@ -23,7 +23,8 @@ public class ToggleShift extends Command {
   protected void initialize() {
     drive = (DriveTrain)(Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN));
     System.out.println("shifting gear");
-    drive.toggleShift();
+   // drive.toggleShift();
+    drive.applyShift("slow");
 
   }
 
@@ -42,11 +43,13 @@ public class ToggleShift extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    drive.applyShift("high");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    drive.applyShift("high");
   }
 }

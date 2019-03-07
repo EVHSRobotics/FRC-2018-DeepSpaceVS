@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.AutoIntake;
+import frc.robot.commands.CameraToggle;
+import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ElevatorSetPoint;
 import frc.robot.commands.Extend1;
 import frc.robot.commands.Extend2;
-import frc.robot.commands.ToggleShift;
+import frc.robot.commands.ShiftGearLow;
 import frc.robot.drivePaths.DriveCargoBayRight;
 
 /**
@@ -64,6 +66,7 @@ public class OI {
   public static JoystickButton BBox = new JoystickButton(joyXBox, 2);
   public static JoystickButton XBox = new JoystickButton(joyXBox, 3);
   public static JoystickButton YBox = new JoystickButton(joyXBox, 4);
+  public static JoystickButton StartBut = new JoystickButton(joyXBox, 8);
 
   public static JoystickButton bumperLt = new JoystickButton(joyXBox, 5);
   public static JoystickButton bumperRt = new JoystickButton(joyXBox, 6);
@@ -97,23 +100,33 @@ public class OI {
   public static JoystickButton bacWheelButtonLT = new JoystickButton(joyTurn, 7);
 
   static {
-    // wheel
-    bacWheelButtonRT.whenPressed(new ToggleShift());
-    bacWheelButtonLT.whenPressed(new ToggleShift());
+   
 
     // xBox
     bumperLt.whenPressed(new Extend1());
     bumperRt.whenPressed(new Extend2());
+    
+    if(StartBut.get()){
+      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
+      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
+      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+    }else{
+      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
+      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
+      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
+    }
 
-    dUP.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
-    dLEFT.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
-    dDOWN.whenPressed(new ElevatorSetPoint(Config.elevatorHatchLow));
-
-    // dUP.whenPressed(new ClawSetPoint(Config.claw90));
-    // dLEFT.whenPressed(new ClawSetPoint(-700));
-    ABox.whenPressed(new AutoIntake());
+   
+    dUP.whenPressed(new ClawSetPoint(Config.claw90));
+    dDOWN.whenPressed(new ClawSetPoint(Config.clawZero));
+    dLEFT.whenPressed(new AutoIntake());
 
 
+    //throttle
+    trigger.whileHeld(new ShiftGearLow());
+    bottomLeft.whenPressed(new CameraToggle());
+
+    //wheel
     XWheel.whenPressed(new DriveCargoBayRight());
     // buttonT6.whenPressed(new ElevatorSetPoint(Config.elevatorCargo));
 

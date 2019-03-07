@@ -23,16 +23,17 @@ public class JeVois {
    private static final int BAUD_RATE = 115200;
 
    // MJPG Streaming Constants
-   private static final int MJPG_STREAM_PORT = 1181;
+   private  int MJPG_STREAM_PORT;//= 1181;
 
    // Confgure the camera to stream debug images or not.
    private boolean broadcastUSBCam = false;
 
    // When streaming, use this set of configuration
-   private static final int STREAM_WIDTH_PX = 320;// 640;
-   private static final int STREAM_HEIGHT_PX = 240 ;//300;
-   private static final int STREAM_RATE_FPS = 29; //15;
+   private   int STREAM_WIDTH_PX = 320;// 640;
+   private  int STREAM_HEIGHT_PX = 240 ;//300;
+   private    int STREAM_RATE_FPS = 29; //15;
 
+   private int usbPort;
    // Serial port used for getting target data from JeVois
    private SerialPort visionPort = null;
 
@@ -40,13 +41,22 @@ public class JeVois {
    private UsbCamera visionCam = null;
    private MjpegServer camServer = null;
 
+
    // Status variables
    private boolean dataStreamRunning = false;
    private boolean camStreamRunning = false;
    private boolean visionOnline = false;
 
-   public JeVois(boolean useUSBStream) {
+   public JeVois(boolean useUSBStream, int width, int height, int fps, int port, int uPort) {
        int retry_counter = 0;
+      STREAM_WIDTH_PX = width;
+       STREAM_HEIGHT_PX = height;
+       STREAM_RATE_FPS = fps;
+      MJPG_STREAM_PORT = port;
+       this.usbPort = uPort;
+
+      
+
 
        // Retry strategy to get this serial port open.
        // I have yet to see a single retry used assuming the camera is plugged in
@@ -71,7 +81,7 @@ public class JeVois {
 
 
       System.out.println("about to start streamer");
-       start();
+      // start();
    }
 
    public void start() {
@@ -99,7 +109,7 @@ public class JeVois {
 
        try{
            System.out.print("Starting JeVois Cam Stream...");
-           visionCam = new UsbCamera("VisionProcCam", 0);
+           visionCam = new UsbCamera("VisionProcCam", usbPort);
         //  visionCam =  CameraServer.getInstance().startAutomaticCapture("VisionProcCam", 0);
           // visionCam.setPixelFormat(PixelFormat.kYUYV);
            visionCam.setVideoMode(PixelFormat.kYUYV, STREAM_WIDTH_PX, STREAM_HEIGHT_PX, STREAM_RATE_FPS);
@@ -110,7 +120,7 @@ public class JeVois {
            camStreamRunning = true;
           
            dataStreamRunning = false;
-           System.out.println("SUCCESS!!");
+           System.out.println("SUCCESS!! on usb " + usbPort);
        } catch (Exception e) {
            System.out.println("error cannot start camera");
            DriverStation.reportError("Cannot start camera stream from JeVois", false);
@@ -133,6 +143,14 @@ public class JeVois {
    public boolean getCameraStatus(){
        return camStreamRunning;
    }
+
+   public MjpegServer getCamServer(){
+       return camServer;
+   }
+
+   public UsbCamera getUSUsbCamera(){
+    return visionCam;
+}
 }
 
 

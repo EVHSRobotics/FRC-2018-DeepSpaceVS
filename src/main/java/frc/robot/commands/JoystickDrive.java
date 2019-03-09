@@ -41,18 +41,21 @@ public class JoystickDrive extends Command {
   
     if(OI.thumbButton.get()){ 
 
-      drive.setTurnMultiplier(.2);
+      drive.setTurnMultiplier(.3);
     
       SmartDashboard.putNumber("small turn curve", turnCurve(smallTurn));
-      drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(smallTurn), sig(throttle) + Config.turnMultiplier * turnCurve(smallTurn));
+      drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(smallTurn), sig(throttle) + .95*Config.turnMultiplier * turnCurve(smallTurn));
     }else { 
 
-      drive.setTurnMultiplier(1);
-      drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(turn), sig(throttle) + Config.turnMultiplier * turnCurve(turn));
+      drive.setTurnMultiplier(.5);
+      drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(turn), .955* sig(throttle) + Config.turnMultiplier * turnCurve(turn));
     }
   
    SmartDashboard.putNumber("throttle", throttle);
    SmartDashboard.putNumber("turn curve", turnCurve(turn));
+
+   SmartDashboard.putNumber("left Speed: ",  sig(throttle) - Config.turnMultiplier * turnCurve(turn));
+   SmartDashboard.putNumber("right Speed: ", sig(throttle) + Config.turnMultiplier * turnCurve(turn));
 
 
   }
@@ -83,7 +86,7 @@ public class JoystickDrive extends Command {
     if(val < 0) turnMultiplier *= -1;
 
     double turnVal =  .65/(.7 + Math.pow(Math.E, -1 * (4*(Math.abs(val) - .4))));
-   
+    // double turnVal = .55 * val;
     return turnVal * turnMultiplier;
     
   }

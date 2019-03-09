@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -22,9 +22,9 @@ public class Intake extends Subsystem {
   // here. Call these from Commands.
 
   boolean runIntakeAuto;
-  VictorSPX victor;
+  TalonSRX victor;
   public Intake(){
-    victor = new VictorSPX(RobotMap.intakeMaster);
+    victor = new TalonSRX(RobotMap.intakeMaster);
     runIntakeAuto = false;
   }
   @Override

@@ -87,11 +87,11 @@ public class Robot extends TimedRobot {
     
     camera1 = new JeVois(true, 320, 240, 29, 1180, 0);
     camera1.start();
-    //camera2 = new JeVois(true, 320, 240, 30, 1181, 0);
-   
-    drive.resetEncoders();
-    elevator.resetEncoder();
-    claw.resetEncoder();
+    camera2 = new JeVois(true, 320, 240, 30, 1181, 1);
+    camera2.start();
+    //drive.resetEncoders();
+    //elevator.resetEncoder();
+    //claw.resetEncoder();
    
 
     

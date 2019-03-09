@@ -11,26 +11,27 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Hatch;
 import frc.robot.*;
 import frc.robot.subsystems.SubsystemNames;
-public class Extend1 extends Command {
+public class ExtendHatchHook extends Command {
   Hatch hatch;
-  public Extend1() {
+  public ExtendHatchHook() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+   
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
-    System.out.println("shifting hatch");
-   // hatch.toggleHatch1();
-    hatch.extendPunch();
+    System.out.println("shifting hatch 2");
+    hatch.toggleHook();
+    //hatch.extendPunch();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()

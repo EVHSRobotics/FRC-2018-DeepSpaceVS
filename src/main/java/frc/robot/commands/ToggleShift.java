@@ -8,29 +8,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.Hatch;
+import frc.robot.Robot;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
-import frc.robot.*;
 
-public class RetractPunch extends Command {
-  Hatch hatch;
-  public RetractPunch() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ToggleShift extends Command {
+  DriveTrain drive;
+  public ToggleShift() {
+   
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
-    System.out.println("shifting hatch");
-    hatch.retractPunch();
-    
+    drive = (DriveTrain)(Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN));
+    System.out.println("shifting gear");
+    drive.toggleShift();
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

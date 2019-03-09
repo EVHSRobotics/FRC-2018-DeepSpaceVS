@@ -51,4 +51,6 @@ public class RobotMap {
   public static int hatchExtend1_1 = 5;
   public static int hatchExtend2_2 = 6;
 
+  public static int spikeRelay = 0;
+
 }

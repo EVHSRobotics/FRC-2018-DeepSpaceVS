@@ -14,9 +14,11 @@ import frc.robot.commands.AutoIntake;
 import frc.robot.commands.CameraToggle;
 import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ElevatorSetPoint;
-import frc.robot.commands.Extend1;
-import frc.robot.commands.Extend2;
+import frc.robot.commands.ExtendHatchBar;
+import frc.robot.commands.ExtendHatchHook;
+import frc.robot.commands.HatchBar;
 import frc.robot.commands.ShiftGearLow;
+import frc.robot.commands.ToggleShift;
 import frc.robot.drivePaths.DriveCargoBayRight;
 
 /**
@@ -103,31 +105,33 @@ public class OI {
    
 
     // xBox
-    bumperLt.whenPressed(new Extend1());
-    bumperRt.whenPressed(new Extend2());
+    bumperLt.whenPressed(new ExtendHatchBar());
+    bumperRt.whenPressed(new ExtendHatchHook());
     
     if(StartBut.get()){
-      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
+      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
       BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
       ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
     }else{
-      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
+      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
       BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
       ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
     }
 
    
-    dUP.whenPressed(new ClawSetPoint(Config.claw90));
-    dDOWN.whenPressed(new ClawSetPoint(Config.clawZero));
-    dLEFT.whenPressed(new AutoIntake());
+    // dUP.whenPressed(new ClawSetPoint(Config.claw90));
+    // dDOWN.whenPressed(new ClawSetPoint(Config.clawZero));
+   // dLEFT.whenPressed(new AutoIntake());
 
 
     //throttle
-    trigger.whileHeld(new ShiftGearLow());
+    trigger.whileActive(new ShiftGearLow());
     bottomLeft.whenPressed(new CameraToggle());
 
     //wheel
     XWheel.whenPressed(new DriveCargoBayRight());
+    bacWheelButtonRT.whenPressed(new ToggleShift());
+    
     // buttonT6.whenPressed(new ElevatorSetPoint(Config.elevatorCargo));
 
   }

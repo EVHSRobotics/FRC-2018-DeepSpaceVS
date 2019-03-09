@@ -53,7 +53,7 @@ public class Hatch extends Subsystem {
     else if(!isExtend1) extend1.set(Value.kReverse);
     isExtend1 = !isExtend1;
   }
-  public void toggleHatch2(){
+  public void toggleHook(){
     System.out.println("toggle hatch extend 2");
     SmartDashboard.putBoolean("hatch 2 extended", isExtend2);
     if(isExtend2) extend2.set(Value.kForward);

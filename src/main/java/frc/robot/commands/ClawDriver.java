@@ -9,10 +9,8 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Config;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.Claw;
@@ -22,6 +20,7 @@ public class ClawDriver extends Command {
   Claw claw;
   double speed;
   double holdVal;
+  double joyVal;
 
   public ClawDriver() {
     // Use requires() here to declare subsystem dependencies
@@ -40,32 +39,36 @@ public class ClawDriver extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double value = -OI.joyXBox.getRawAxis(5);
-    value = Math.abs(value) < .05 ? 0 : value;
+    double value = OI.joyXBox.getRawAxis(5);
+    joyVal = Math.abs(value) < .05 ? 0 : value;
 
   //default hold with ball
   
-    if(claw.getPos() < -370){
-      holdVal = .11;
+    if(claw.getPos() > 240){ //should try to go against throttle
+      holdVal = -.07;
     }
    // holdVal = .16;
-    if(claw.getPos() < -1000){ //increase hold value as claw passes mid angle
-      holdVal = .15;
+    if(claw.getPos() > 1000){ //increase hold value as claw passes mid angle
+      holdVal = -.16;
     }
    
-    if(claw.getPos() < -2700){
-      holdVal = .18;
-    }
-    value = value*.5 + holdVal;
-    System.out.println("claw value: " + value);
-    claw.drive(ControlMode.PercentOutput, value);
-     //if not past limits
-    //  if (claw.getPos() < -50) {
-    //   holdVal = .16;
-
+    // if(claw.getPos() > 2700 && joyVal < 0){ //was -2700 on practiceBot
+    //   holdVal = -.18;
+    //   joyVal = 0;
     // }
+    // if(Math.abs(claw.getPos()) > 2700 && joyVal < 0) {
+		// 	joyVal = 0;
+		// }
+    speed = joyVal*.5 + holdVal;
+    System.out.println("claw value: " + speed);
+    claw.drive(ControlMode.PercentOutput, speed);
+
+
+    
    
     SmartDashboard.putNumber("Claw encoder: ", claw.getPos());
+    SmartDashboard.putNumber("Claw power: ", speed);
+    SmartDashboard.putNumber("Claw Joy Value", joyVal);
   }
 
   // Make this return true when this Command no longer needs to run execute()

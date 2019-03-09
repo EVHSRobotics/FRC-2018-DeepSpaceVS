@@ -8,14 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.Extend1;
+import edu.wpi.first.wpilibj.Timer;
 
-
-public class RunBar extends CommandGroup {
+public class HatchBar extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public RunBar() {
+  public HatchBar() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -32,9 +31,8 @@ public class RunBar extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-
-    addSequential(new Extend1());
- //   Timer.delay(1);
+    addSequential(new ExtendHatchBar());
+    Timer.delay(1);
     addSequential(new RetractBar());
   }
 }

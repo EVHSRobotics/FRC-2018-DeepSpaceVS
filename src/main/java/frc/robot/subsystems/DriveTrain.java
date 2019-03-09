@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Relay;
 
 //import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -32,6 +33,7 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
   TalonSRX left1, left2, left3, right1, right2, right3;
   VictorSPX v_left2, v_left3, v_right2, v_right3;
+  
   DoubleSolenoid shifter;
   Value fast = Value.kForward;
   Value slow = Value.kReverse;
@@ -52,11 +54,10 @@ public class DriveTrain extends Subsystem {
   public DriveTrain(){
       
 
-    initTalonDrive();
-   // initVictorDrive();
+    //initTalonDrive();
+    initVictorDrive();
       setNeutralMode(NeutralMode.Brake);
-
-		  
+       
 
       PIDTemplate.configTalon(left1, true);
       PIDTemplate.configTalon(right1, true);
@@ -65,6 +66,8 @@ public class DriveTrain extends Subsystem {
       right1.setSelectedSensorPosition(0);
 
       shifter = new DoubleSolenoid(RobotMap.shifterUp, RobotMap.shifterDown);
+
+      
       applyShift("high");
     }
 
@@ -169,30 +172,31 @@ public void stop(){
       gearState = "fast";
       shifter.set(fast);
       
-      System.out.println("shifted to fast");
-      double P_Drive_HIGH = .35;// 0.35;
-      double I_Drive_HIGH = 1.0E-4;
-      double D_Drive_HIGH = 0.11; // 0.11;
-      double F_Drive_HIGH = 0.1042;
-      double targetSpeed_Drive_FAST = 9200;///= 8350;
+      // System.out.println("shifted to fast");
+      // double P_Drive_HIGH = .35;// 0.35;
+      // double I_Drive_HIGH = 1.0E-4;
+      // double D_Drive_HIGH = 0.11; // 0.11;
+      // double F_Drive_HIGH = 0.1042;
+      // double targetSpeed_Drive_FAST = 8350;///= 8350;
 
-       PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
-       PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
+      //  PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
+      //  PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
       }else if(gear.equals("slow")){
       gearState = "slow";
       shifter.set(slow);
       System.out.println("shifted to slow");
 
-      double P_Drive_LOW = .45;
-      double I_Drive_LOW = 1.8E-4;
-      double D_Drive_LOW = 2;
-      double F_Drive_LOW = 0.1042;
-      double targetSpeed_Drive_LOW = Config.slowTarget;
+      // double P_Drive_LOW = .45;
+      // double I_Drive_LOW = 1.8E-4;
+      // double D_Drive_LOW = 2;
+      // double F_Drive_LOW = 0.1042;
+      // double targetSpeed_Drive_LOW = 3500;//Config.slowTarget;
 
-      PIDTemplate.updatePID(left1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
-      PIDTemplate.updatePID(right1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
+      // PIDTemplate.updatePID(left1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
+      // PIDTemplate.updatePID(right1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
     
     } 
+    SmartDashboard.putBoolean("In High Gear?", isFast);
   }
 
   /** set mode of talons*/
@@ -265,6 +269,6 @@ public void stop(){
     return camera1;
   }
  
-
+ 
   
 }

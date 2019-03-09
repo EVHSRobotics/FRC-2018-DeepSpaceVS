@@ -27,6 +27,7 @@ public class Config {
     public static double elevatorHigh= 56100;
     public static double elevatorMid = 37000;
     public static double elevatorLow = 5000;// 13100;
+    public static double elevatorCargoShip = 0;
 
     public static double elevatorHighHatch = 55000;
     public static double elevatorMidHatch = 35000;

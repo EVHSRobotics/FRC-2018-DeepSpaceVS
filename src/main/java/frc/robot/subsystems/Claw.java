@@ -12,10 +12,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClawDriver;
-
+import frc.robot.*;
 /**
  * Add your docs here.
  */
@@ -24,7 +26,8 @@ public class Claw extends Subsystem {
   // here. Call these from Commands.
 
   TalonSRX masterTalon;
-  VictorSPX slave;
+  TalonSRX slave;
+  Relay spike;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -34,7 +37,8 @@ public class Claw extends Subsystem {
 
   public Claw(){
     masterTalon = new TalonSRX(RobotMap.clawMaster);
-    slave = new VictorSPX(RobotMap.clawSlave);
+    slave = new TalonSRX(RobotMap.clawSlave);
+    spike = new Relay(RobotMap.spikeRelay);
 
     masterTalon.setInverted(true);
     slave.setInverted(false);
@@ -44,11 +48,13 @@ public class Claw extends Subsystem {
     resetEncoder();
 
 
+
   }
 
   public void drive( ControlMode mode, double value){
-    if (getPos() > -390) {
-        value = -.08;
+    if (getPos() < 250) { //should try to go forward if behind 90 degree
+        value = .09;
+        
     }
    
 
@@ -60,6 +66,15 @@ public class Claw extends Subsystem {
     //startPos = masterTalon.getSelectedSensorPosition(0);
     masterTalon.setSelectedSensorPosition(0);
   }
+
+  // public void changeLightIndicator(){
+  //   if(Robot.getSensors().isBallCaught()){
+  //     spike.set(Relay.Value.kOn);;
+  //   }else {
+  //     spike.set(Relay.Value.kOff);
+     
+  //   }
+  // }
   
 
   public double getPos() {

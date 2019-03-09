@@ -13,6 +13,7 @@ import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SubsystemNames;
 
@@ -40,12 +41,16 @@ public class SensorBoard {
 
         drive = (DriveTrain) Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN);
 
-        // try{
-        //     banner = new DigitalInput(0);
-        // }catch(UncleanStatusException e){
-        //     System.out.println(e.getMessage());
-        // }
+    //    // try{
+    //         System.out.println("trying to initialize bannner");
+    //         banner = new DigitalInput(0);
+    //         System.out.println("banner : " + banner.get());
+    //         SmartDashboard.putBoolean("BANNER: ", banner.get());
+    //     // }catch(UncleanStatusException e){
+    //     //     System.out.println(e.getMessage());
+    //     // }
     }
+
 
     public AHRS getNavX() {
         System.out.println("getting navX");
@@ -63,7 +68,7 @@ public class SensorBoard {
 	//  	return banner;
     //  }
     
-    // public boolean hasBannerDetected(){
+    // public boolean isBallCaught(){
     //     return banner.get();
     // }
 

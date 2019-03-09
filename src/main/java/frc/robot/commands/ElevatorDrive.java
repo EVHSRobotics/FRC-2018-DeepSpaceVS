@@ -34,8 +34,15 @@ public class ElevatorDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double value = -OI.joyXBox.getRawAxis(1);
+    double value = OI.joyXBox.getRawAxis(1);
     value = Math.abs(value) < .05 ? 0 : value;
+
+    if(elevator.getPos() > 55000 && value < 0){
+      value = 0;
+      holdValue = .15;
+    }else {
+      holdValue = 0;
+    }
     
     // if(value == 0){
     //   Robot.compressor.start();
@@ -44,14 +51,14 @@ public class ElevatorDrive extends Command {
     // }
    // was .4
 		double multiplier = 1;
-		if (elevator.getPos() > 4000) {
-			elevator.setHoldVal(.2);
-    } 
-    else {
-      elevator.setHoldVal(0);
-    }
+		// if (elevator.getPos() > 4000) {
+		// 	elevator.setHoldVal(.2);
+    // } 
+    // else {
+    //   elevator.setHoldVal(0);
+    // }
     // elevator.drive(-(value * multiplier + holdValue), ControlMode.PercentOutput);
-    elevator.drive(value*.5 + .1, ControlMode.PercentOutput);
+    elevator.drive(value*.9 + holdValue, ControlMode.PercentOutput);
     SmartDashboard.putNumber("Elevator encoder: ", elevator.getPos());
     SmartDashboard.putNumber("Elevator throttle: ", value);
 

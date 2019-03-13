@@ -53,7 +53,7 @@ public class ClawSetPoint extends Command {
       claw.drive(ControlMode.PercentOutput, -.2);
     } else { // was 2000 COMP
       claw.drive(ControlMode.PercentOutput, .45); // was .35 COMP
-      direction = false;
+      //direction = false;
     }
     SmartDashboard.putString("claw start", "starting claw");
 
@@ -63,20 +63,12 @@ public class ClawSetPoint extends Command {
   @Override
   protected boolean isFinished() {
     boolean isFinished = false;
-    // if(direction){
-    // if (claw.getPos() > target)
-    // isFinished = false;
-    // else if (claw.getPos() < target){
-    // isFinished = false;
-    // }
-    // }
-    // else
-    // isFinished = true;
+
 
     if (OI.XWheel.get())
       return true;
 
-    return Math.abs(target - claw.getPos()) < 350;
+    return Math.abs(target - claw.getPos()) < 250;
 
   }
 

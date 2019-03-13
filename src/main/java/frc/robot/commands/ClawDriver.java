@@ -22,6 +22,7 @@ public class ClawDriver extends Command {
   double holdVal;
   double joyVal;
 
+  /** postive joy --> claw goes down; negative joy --> claw goes up  */
   public ClawDriver() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -51,16 +52,21 @@ public class ClawDriver extends Command {
     if(claw.getPos() > 1000){ //increase hold value as claw passes mid angle
       holdVal = -.16;
     }
-   
-    // if(claw.getPos() > 2700 && joyVal < 0){ //was -2700 on practiceBot
+    
+    if(claw.getPos() > 2300){
+      holdVal = -.18;
+    }
+
+    
+    
+    /**if claw past max and joystick trying to go forward --> set joy to 0, only run hold */
+    // if(claw.getPos() > 2700 && joyVal > 0){ //was -2700 on practiceBot
     //   holdVal = -.18;
     //   joyVal = 0;
     // }
-    // if(Math.abs(claw.getPos()) > 2700 && joyVal < 0) {
-		// 	joyVal = 0;
-		// }
+   
     speed = joyVal*.5 + holdVal;
-    System.out.println("claw value: " + speed);
+    // System.out.println("claw value: " + speed);
     claw.drive(ControlMode.PercentOutput, speed);
 
 

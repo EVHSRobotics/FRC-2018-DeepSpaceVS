@@ -9,6 +9,8 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import org.ietf.jgss.Oid;
+
 import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotController;
@@ -53,7 +55,7 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
   public static JeVois camera1;
   public static JeVois camera2;
-  boolean runCam1;
+  boolean isCamOn;
 
 
 
@@ -86,9 +88,11 @@ public class Robot extends TimedRobot {
     compressor = new Compressor(0);
     
     camera1 = new JeVois(true, 320, 240, 29, 1180, 0);
-    camera1.start();
-    camera2 = new JeVois(true, 320, 240, 30, 1181, 1);
-    camera2.start();
+   // camera1.start();
+    camera2 = new JeVois(true, 320, 240, 29, 1180, 1);
+    //camera2.start();
+
+    
     //drive.resetEncoders();
     //elevator.resetEncoder();
     //claw.resetEncoder();
@@ -200,6 +204,16 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("drive left", drive.getLtEncoders());
     SmartDashboard.putNumber("drive right", drive.getRtEncoders());
 
+    if(OI.ABox.get()){
+      if(isCamOn){
+        camera1.stop();
+        camera2.stop();
+      }else{
+        camera1.start();
+        camera2.start();
+      }
+      isCamOn = !isCamOn;
+    }
     // if(OI.bottomLeft.get()){
       
     //   System.out.println("switching camera: ");

@@ -18,7 +18,7 @@ import frc.robot.subsystems.SubsystemNames;
 
 public class ElevatorDrive extends Command {
   Elevator elevator;
-  double holdValue; 
+  double holdVal; 
   public ElevatorDrive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -34,33 +34,31 @@ public class ElevatorDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double value = OI.joyXBox.getRawAxis(1);
-    value = Math.abs(value) < .05 ? 0 : value;
+    double joyVal = OI.joyXBox.getRawAxis(1);
+    joyVal = Math.abs(joyVal) < .05 ? 0 : joyVal;
 
-    if(elevator.getPos() > 55000 && value < 0){
-      value = 0;
-      holdValue = .15;
-    }else {
-      holdValue = 0;
-    }
+   
     
-    // if(value == 0){
-    //   Robot.compressor.start();
-    // }else{
-    //   Robot.compressor.stop();
-    // }
-   // was .4
-		double multiplier = 1;
-		// if (elevator.getPos() > 4000) {
-		// 	elevator.setHoldVal(.2);
-    // } 
-    // else {
-    //   elevator.setHoldVal(0);
-    // }
+  //   if(elevator.getPos() > 100){ //should try to go against throttle
+  //     holdVal = -.07;
+  //   }
+  //  // holdVal = .16;
+  //   if(elevator.getPos() > 150){ //increase hold value as claw passes mid angle
+  //     holdVal = -.16;
+  //   }
+  //   if(elevator.getPos() > 55000 && joyVal > 0){
+  //     joyVal = 0;
+  //     holdVal = -.17;
+  //   }
+
+  //  if(elevator.getPos() > 2700 && joyVal > 0){ //was -2700 on practiceBot
+  //     holdVal = -.18;
+  //     joyVal = 0;
+  //   }
     // elevator.drive(-(value * multiplier + holdValue), ControlMode.PercentOutput);
-    elevator.drive(value*.9 + holdValue, ControlMode.PercentOutput);
+    elevator.drive(joyVal*.9 + holdVal, ControlMode.PercentOutput);
     SmartDashboard.putNumber("Elevator encoder: ", elevator.getPos());
-    SmartDashboard.putNumber("Elevator throttle: ", value);
+    SmartDashboard.putNumber("Elevator throttle: ", joyVal);
 
     
 

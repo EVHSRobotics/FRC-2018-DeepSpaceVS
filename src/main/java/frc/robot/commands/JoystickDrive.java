@@ -49,6 +49,7 @@ public class JoystickDrive extends Command {
 
       drive.setTurnMultiplier(.5);
       drive.drive(ControlMode.PercentOutput, sig(throttle) - Config.turnMultiplier * turnCurve(turn), .955* sig(throttle) + Config.turnMultiplier * turnCurve(turn));
+    
     }
   
    SmartDashboard.putNumber("throttle", throttle);
@@ -90,6 +91,7 @@ public class JoystickDrive extends Command {
     return turnVal * turnMultiplier;
     
   }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -108,5 +110,6 @@ public class JoystickDrive extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    drive.drive(ControlMode.PercentOutput, 0, 0);
   }
 }

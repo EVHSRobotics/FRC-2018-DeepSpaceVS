@@ -20,6 +20,7 @@ import frc.robot.commands.ClawDriver;
 import frc.robot.*;
 /**
  * Add your docs here.
+ * 
  */
 public class Claw extends Subsystem {
   // Put methods for controlling this subsystem
@@ -53,13 +54,9 @@ public class Claw extends Subsystem {
 
   public void drive( ControlMode mode, double value){
     if (getPos() < 250) { //should try to go forward if behind 90 degree
-        value = .09;
-        
+        value = .085;    
     }
-   
-
     masterTalon.set(mode, value);
-    slave.set(mode, value);
   }
   
   public void resetEncoder() {
@@ -67,14 +64,14 @@ public class Claw extends Subsystem {
     masterTalon.setSelectedSensorPosition(0);
   }
 
-  // public void changeLightIndicator(){
-  //   if(Robot.getSensors().isBallCaught()){
-  //     spike.set(Relay.Value.kOn);;
-  //   }else {
-  //     spike.set(Relay.Value.kOff);
+  public void changeLightIndicator(){
+    if(getPos() < 500){
+      spike.set(Relay.Value.kOn);;
+    }else {
+      spike.set(Relay.Value.kOff);
      
-  //   }
-  // }
+    }
+  }
   
 
   public double getPos() {

@@ -105,18 +105,18 @@ public class OI {
    
 
     // xBox
-    bumperLt.whenPressed(new ExtendHatchBar());
+   // bumperLt.whenPressed(new ExtendHatchBar());
     bumperRt.whenPressed(new ExtendHatchHook());
     
-    if(StartBut.get()){
-      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
-      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
-      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
-    }else{
-      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
-      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
-      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
-    }
+    // if(StartBut.get()){
+    //   YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
+    //   BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
+    //   ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+    // }else{
+    //   YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
+    //   BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
+    //   ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
+    // }
 
    
     // dUP.whenPressed(new ClawSetPoint(Config.claw90));

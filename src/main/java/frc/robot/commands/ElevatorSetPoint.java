@@ -44,6 +44,12 @@ public class ElevatorSetPoint extends Command {
 	// //		elevator.updateTargetSpeed(Config.elevatorDownSpeed);
   // 	}
 
+  if (target < elevator.getPos()) { //target is below --> go down, negative power
+    elevator.drive( -.5, ControlMode.PercentOutput);
+  } else { // target is up --> go up, postive power
+    elevator.drive( .5, ControlMode.PercentOutput);
+    //direction = false;
+  }
   
 		//elevator.drive(target, ControlMode.MotionMagic);
 
@@ -66,12 +72,15 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected boolean isFinished() {
    boolean isFinished = false;
-  if(Math.abs(elevator.getPos() - target) < 500)  isFinished = true;
-  else isFinished = false;
-  
-   if(OI.XWheel.get()) isFinished = true;
 
-   return isFinished;
+   if(OI.XWheel.get()){
+
+    isFinished = true;
+   }
+
+   return Math.abs(elevator.getPos() - target) < 500; 
+  
+   
   }
 
   // Called once after isFinished returns true

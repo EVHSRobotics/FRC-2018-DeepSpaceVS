@@ -86,6 +86,12 @@ public class Elevator extends Subsystem {
   }
   
   public void drive(double value, ControlMode mode){
+    if(getPos() < 1000){
+        value = -.09;
+    }
+    if(getPos() > 56800){
+      value = 0.05;
+    }
     masterTalon.set(mode, value);
   }
 

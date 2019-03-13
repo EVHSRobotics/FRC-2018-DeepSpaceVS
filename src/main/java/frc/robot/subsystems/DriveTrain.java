@@ -59,8 +59,8 @@ public class DriveTrain extends Subsystem {
       setNeutralMode(NeutralMode.Brake);
        
 
-      PIDTemplate.configTalon(left1, true);
-      PIDTemplate.configTalon(right1, true);
+      // PIDTemplate.configTalon(left1, true);
+      // PIDTemplate.configTalon(right1, true);
 
       left1.setSelectedSensorPosition(0);
       right1.setSelectedSensorPosition(0);
@@ -172,7 +172,7 @@ public void stop(){
       gearState = "fast";
       shifter.set(fast);
       
-      // System.out.println("shifted to fast");
+       System.out.println("shifted to fast");
       // double P_Drive_HIGH = .35;// 0.35;
       // double I_Drive_HIGH = 1.0E-4;
       // double D_Drive_HIGH = 0.11; // 0.11;

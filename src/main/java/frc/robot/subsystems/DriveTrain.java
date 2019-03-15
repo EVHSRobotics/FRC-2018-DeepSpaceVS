@@ -231,6 +231,7 @@ public void stop(){
   }
 
   public int getAvgEncoders(){
+    
    return (getRtEncoders() + getLtEncoders() ) / 2;
   }
 

@@ -8,12 +8,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.PIDTemplate;
 import frc.robot.RobotMap;
+import frc.robot.Config;
 import frc.robot.commands.ElevatorDrive;
 
 /**
@@ -47,30 +50,31 @@ public class Elevator extends Subsystem {
     slaveVic.follow(masterTalon);
 
     resetEncoder();
-   
+   //-2500 up speed
+   //3000 down speed
 
-		// masterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		// masterTalon.setInverted(false);
-		// masterTalon.setSensorPhase(true);
-		// masterTalon.setNeutralMode(NeutralMode.Brake);
-		// masterTalon.enableVoltageCompensation(true);
-		// double P = 0; //.24d;
-		// double I = 0; //.0001d;
-		// double D = 0; // 15d;
-		// double F = 0 ;// 1023d / 24000;
-		// double targetSpeed = Config.elevatorUpSpeed;
+		masterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 11);
+		masterTalon.setInverted(false);
+		masterTalon.setSensorPhase(false);
+		masterTalon.setNeutralMode(NeutralMode.Brake);
+		masterTalon.enableVoltageCompensation(true);
+		double P = 6000000000000000000d; //.24d;
+		double I = 0;
+		double D =  0;
+		double F =  1023d / 2400000;
+		double targetSpeed = 2400000d; 
 
-		// PIDTemplate.updatePID(talon, P, I, D, F, targetSpeed);
+		PIDTemplate.updatePID(masterTalon, P, I, D, F, targetSpeed);
 
      startPos = masterTalon.getSelectedSensorPosition(0);
      masterTalon.enableVoltageCompensation(true);
      slaveVic.enableVoltageCompensation(true);
   }
 
-  // public void updateTargetSpeed(double targetSpeeD){
-  //   masterTalon.configMotionCruiseVelocity((int)targetSpeed, 10);
-  //   masterTalon.configMotionAcceleration((int)targetSpeed, 10);
-  // }
+  public void updateTargetSpeed(double targetSpeeD){
+    masterTalon.configMotionCruiseVelocity((int)targetSpeed, 10);
+    masterTalon.configMotionAcceleration((int)targetSpeed, 10);
+  }
 
   
 	// public boolean isDone() {
@@ -80,10 +84,7 @@ public class Elevator extends Subsystem {
 	// //	return Math.abs(masterTalon.getSelectedSensorPosition(0) - masterTalon.getClosedLoopTarget(0)) < 700; // 700 is not final
 	// }
 
-	public void resetEncoder() {
-    //startPos = masterTalon.getSelectedSensorPosition(0);
-    masterTalon.setSelectedSensorPosition(0);
-  }
+
   
   public void drive(double value, ControlMode mode){
     masterTalon.set(mode, value);
@@ -96,8 +97,8 @@ public class Elevator extends Subsystem {
 	}
 
 	public double getVel() {
-    return 0.1;
-	//	return talon.getSelectedSensorVelocity(0);
+   // return 0.1;
+		return masterTalon.getSelectedSensorVelocity(0);
 	}
 
   public double getVoltage(){
@@ -117,8 +118,16 @@ public class Elevator extends Subsystem {
       holdValue = hold;
   }
 
+ 
+  
   public boolean isDone() {
-		
-		return Math.abs(masterTalon.getSelectedSensorPosition(0) - masterTalon.getClosedLoopTarget(0)) < 100;
+		// System.out.println("Running is done: error: " + talon.getClosedLoopError(0) + " current pos "
+		// 		+ talon.getSelectedSensorPosition(0) + " current target " + talon.getClosedLoopTarget(0));
+		return Math.abs(masterTalon.getSelectedSensorPosition(0) - masterTalon.getClosedLoopTarget(0)) < 200;
 	}
+
+	public void resetEncoder() {
+		startPos = masterTalon.getSelectedSensorPosition(0);
+	}
+
 }

@@ -4,7 +4,14 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/*
+cargo mid - 26000
+cargo high - 54800 
+cargo intake - 5700
+hatch low - 5900
+hatch mid - 33700
+hatch high - 57400
+*/
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -18,7 +25,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SubsystemNames;
 
 public class ElevatorSetPoint extends Command {
- private double target = 0;
+ private double target;
  private double error = 0;
  double speed = .75;
  
@@ -35,7 +42,7 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected void initialize() {
     elevator = (Elevator) Robot.getSubsystem(SubsystemNames.ELEVATOR);
-
+    System.out.println("starting elevator set point");
 	// 	if (elevator.getPos() > target) {
 	// 		System.out.println("Using up target speed");
 	// 	//	elevator.updateTargetSpeed(Config.elevatorUpSpeed);
@@ -53,10 +60,12 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected void execute() {
     
-    elevator.drive(speed, ControlMode.PercentOutput);
-    if(Math.abs(elevator.getPos() - target) < 5500){
-      speed = .3;
-    }
+    elevator.drive(target, ControlMode.MotionMagic);
+    System.out.println("elevator pos: "+ elevator.getPos());
+    System.out.println("elevator speed: " + elevator.getVel());
+    // if(Math.abs(elevator.getPos() - target) < 5500){
+    //   speed = .3;
+    // }
     
   
   SmartDashboard.putString("elevator start", "starting elevator");
@@ -66,15 +75,16 @@ public class ElevatorSetPoint extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   boolean isFinished = false;
-  if(Math.abs(elevator.getPos() - target) < 1500)  isFinished = true;
-  else isFinished = false;
+    boolean isFinished = false;
+  // if(Math.abs(elevator.getPos() - target) < 1500)  isFinished = true;
+  // else isFinished = false;
 
   // elevator.isDone();
+  //if(OI.XWheel.get()) return  true;
+  return elevator.isDone();
 
-   if(OI.XWheel.get()) isFinished = true;
+  
 
-   return isFinished;
   }
 
   // Called once after isFinished returns true

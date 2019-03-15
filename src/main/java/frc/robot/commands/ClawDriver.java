@@ -22,6 +22,7 @@ public class ClawDriver extends Command {
   Claw claw;
   double speed;
   double holdVal;
+  int maxLim;
 
   public ClawDriver() {
     // Use requires() here to declare subsystem dependencies
@@ -40,24 +41,44 @@ public class ClawDriver extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double rawJoy = OI.joyXBox.getRawAxis(5);
     double value = -OI.joyXBox.getRawAxis(5);
     value = Math.abs(value) < .05 ? 0 : value;
 
   //default hold with ball
   
-    if(claw.getPos() < -370){
-      holdVal = .11;
+    if(claw.getPos() > -570){
+      holdVal = .18;
+      
     }
-   // holdVal = .16;
-    if(claw.getPos() < -1000){ //increase hold value as claw passes mid angle
-      holdVal = .15;
-    }
-   
-    if(claw.getPos() < -2700){
+    if(claw.getPos() < -570 ){
       holdVal = .18;
     }
+    if(claw.getPos() < -1000){
+      holdVal = .2;
+    }
+   // holdVal = .16;
+    // if(claw.getPos() < -1000){ //increase hold value as claw passes mid angle
+    //   holdVal = .15;
+    // }
+    // if(Math.abs(value) > .5){
+    //   maxLim = -2000;
+    // }else{
+    //   maxLim = -2400;
+    // }
+   
+    // if(claw.getPos() < -2500){
+    //   if(value < 0) {
+    //     value = 0;
+    //     holdVal = .25;
+    //   }else{
+    //     holdVal = .18;
+    //   }
+    holdVal = 0;
+
+    
     value = value*.5 + holdVal;
-    System.out.println("claw value: " + value);
+   // System.out.println("claw value: " + value);
     claw.drive(ControlMode.PercentOutput, value);
      //if not past limits
     //  if (claw.getPos() < -50) {

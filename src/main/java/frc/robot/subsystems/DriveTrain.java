@@ -58,8 +58,8 @@ public class DriveTrain extends Subsystem {
 
 		  
 
-      PIDTemplate.configTalon(left1, true);
-      PIDTemplate.configTalon(right1, true);
+      PIDTemplate.configTalon(left1, false);
+      PIDTemplate.configTalon(right1, false);
 
       left1.setSelectedSensorPosition(0);
       right1.setSelectedSensorPosition(0);
@@ -135,14 +135,16 @@ public class DriveTrain extends Subsystem {
    */
   public void drive(ControlMode mode, double left, double right){
    
-    // if(mode.equals(ControlMode.Velocity) || mode.equals(ControlMode.MotionMagic)){
-    //   left *= getDriveConstant();
-    //   right *= getDriveConstant();
-    // }
+    if(mode.equals(ControlMode.Velocity) || mode.equals(ControlMode.MotionMagic)){
+      left *= getDriveConstant();
+      right *= getDriveConstant();
+    }
 
     left1.set(mode, left);
     right1.set(mode, right);
 
+    System.out.println(right);
+    System.out.println(gearState);
     SmartDashboard.putNumber("encoder left", left1.getSelectedSensorPosition(0));
     SmartDashboard.putNumber("encoder right", right1.getSelectedSensorPosition(0));
     SmartDashboard.putNumber("turn Multiplier", getTurnMultiplier());
@@ -171,10 +173,10 @@ public void stop(){
       
       System.out.println("shifted to fast");
       double P_Drive_HIGH = .35;// 0.35;
-      double I_Drive_HIGH = 1.0E-4;
+      double I_Drive_HIGH =  1.0E-4;
       double D_Drive_HIGH = 0.11; // 0.11;
       double F_Drive_HIGH = 0.1042;
-      double targetSpeed_Drive_FAST = 9200;///= 8350;
+      double targetSpeed_Drive_FAST = 0;//9200;///= 8350;
 
        PIDTemplate.updatePID(left1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
        PIDTemplate.updatePID(right1, P_Drive_HIGH, I_Drive_HIGH, D_Drive_HIGH, F_Drive_HIGH, targetSpeed_Drive_FAST);
@@ -183,11 +185,11 @@ public void stop(){
       shifter.set(slow);
       System.out.println("shifted to slow");
 
-      double P_Drive_LOW = .45;
+      double P_Drive_LOW = .45;//.45;
       double I_Drive_LOW = 1.8E-4;
-      double D_Drive_LOW = 2;
-      double F_Drive_LOW = 0.1042;
-      double targetSpeed_Drive_LOW = Config.slowTarget;
+      double D_Drive_LOW = .2d;
+      double F_Drive_LOW = 1023d/4500;//0.1042;
+      double targetSpeed_Drive_LOW = 4500;//Config.slowTarget; 
 
       PIDTemplate.updatePID(left1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
       PIDTemplate.updatePID(right1, P_Drive_LOW, I_Drive_LOW, D_Drive_LOW, F_Drive_LOW,targetSpeed_Drive_LOW) ;
@@ -249,6 +251,7 @@ public void stop(){
   }
 
   public double getDriveConstant(){
+    if(gearState.equals("")) return 0;
     if(gearState.equals("slow")) return Config.slowTarget;
     else if(gearState.equals("fast")) return Config.fastTarget;
     return 0;

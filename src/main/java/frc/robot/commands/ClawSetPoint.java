@@ -83,7 +83,7 @@ public class ClawSetPoint extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    claw.drive(ControlMode.PercentOutput, 0);
+    claw.drive(ControlMode.PercentOutput, .4);
 
   }
 

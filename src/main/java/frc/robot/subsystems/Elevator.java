@@ -58,13 +58,13 @@ public class Elevator extends Subsystem {
 		masterTalon.setSensorPhase(false);
 		masterTalon.setNeutralMode(NeutralMode.Brake);
 		masterTalon.enableVoltageCompensation(true);
-		double P = 6000000000000000000d; //.24d;
-		double I = 0;
-		double D =  0;
-		double F =  1023d / 2400000;
-		double targetSpeed = 2400000d; 
+		// double P = 0; //.24d;
+		// double I = 0;
+		// double D =  0;
+		// double F =  1023d / 2400000;
+		// double targetSpeed = 2400000d; 
 
-		PIDTemplate.updatePID(masterTalon, P, I, D, F, targetSpeed);
+		// PIDTemplate.updatePID(masterTalon, P, I, D, F, targetSpeed);
 
      startPos = masterTalon.getSelectedSensorPosition(0);
      masterTalon.enableVoltageCompensation(true);
@@ -92,8 +92,8 @@ public class Elevator extends Subsystem {
 
   public double getPos() {
     
-    //return masterTalon.getSelectedSensorPosition(0) - startPos;
-    return masterTalon.getSelectedSensorPosition(0);
+    return masterTalon.getSelectedSensorPosition(0) - startPos;
+    // return masterTalon.getSelectedSensorPosition(0);
 	}
 
 	public double getVel() {
@@ -107,7 +107,7 @@ public class Elevator extends Subsystem {
   
 
   public void end(){
-    drive(.21, ControlMode.PercentOutput);
+    drive(0, ControlMode.PercentOutput);
   }
 
   public double getHoldVal(){
@@ -120,10 +120,10 @@ public class Elevator extends Subsystem {
 
  
   
-  public boolean isDone() {
+  public boolean isDone(double target) {
 		// System.out.println("Running is done: error: " + talon.getClosedLoopError(0) + " current pos "
 		// 		+ talon.getSelectedSensorPosition(0) + " current target " + talon.getClosedLoopTarget(0));
-		return Math.abs(masterTalon.getSelectedSensorPosition(0) - masterTalon.getClosedLoopTarget(0)) < 200;
+		return Math.abs(masterTalon.getSelectedSensorPosition(0) - target) < 300;
 	}
 
 	public void resetEncoder() {

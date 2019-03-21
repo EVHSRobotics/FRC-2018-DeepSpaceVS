@@ -23,8 +23,8 @@ public class ShiftGearLow extends Command {
   protected void initialize() {
     drive = (DriveTrain)(Robot.getSubsystem(SubsystemNames.DRIVE_TRAIN));
     System.out.println("shifting gear");
-   // drive.toggleShift();
-    drive.applyShift("slow");
+    drive.toggleShift();
+    //drive.applyShift("slow");
 
   }
 

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.AutoIntake;
+import frc.robot.commands.AutoOuttake;
 import frc.robot.commands.CameraToggle;
 import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ElevatorSetPoint;
@@ -103,33 +104,27 @@ public class OI {
    
 
     // xBox
-    bumperLt.whenPressed(new Extend1());
+    //bumperLt.whenPressed(new Extend1()); //prongs
     bumperRt.whenPressed(new Extend2());
     
     // if(StartBut.get()){
-    //   ABox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
-    //   BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
-    //   ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
-    // }else{
-    //   ABox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
-    //   BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
-    //   ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
-    // }
-    ABox.whenPressed(new ElevatorSetPoint(1000));
-
-   
+      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
+      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
+      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
+     
     dUP.whenPressed(new ClawSetPoint(Config.claw90));
     dDOWN.whenPressed(new ClawSetPoint(Config.clawZero));
     dLEFT.whenPressed(new AutoIntake());
 
 
     //throttle
-    trigger.whileHeld(new ShiftGearLow());
+   // trigger.whileHeld(new ShiftGearLow());
     bottomLeft.whenPressed(new CameraToggle());
 
     //wheel
     XWheel.whenPressed(new DriveCargoBayRight());
     // buttonT6.whenPressed(new ElevatorSetPoint(Config.elevatorCargo));
+    bacWheelButtonLT.whenPressed(new ShiftGearLow());
 
   }
 }

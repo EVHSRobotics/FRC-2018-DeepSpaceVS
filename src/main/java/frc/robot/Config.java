@@ -12,7 +12,7 @@ package frc.robot;
  */
 public class Config {
 
-    public static double slowTarget = 600;
+    public static double slowTarget = 4500;
     public static double fastTarget = 8350;
 
     public static double elevatorUpSpeed = 0;
@@ -24,18 +24,19 @@ public class Config {
 
     public static double jayMultipier = 1;
 
-    public static double elevatorHigh= 56100;
-    public static double elevatorMid = 37000;
-    public static double elevatorLow = 5000;// 13100;
-
-    public static double elevatorHighHatch = 55000;
-    public static double elevatorMidHatch = 35000;
-    public static double elevatorLowHatch = 4000;// 13100;
-    
-    
-
    
-    public static double clawZero = -2000;
+    public static double elevatorHigh= 52400;
+    public static double elevatorMid = 26000;
+    public static double elevatorLow = 100;// 13100;
+    public static double elevatorCargoIntake = 5700;
+
+    public static double elevatorHighHatch = 58000;
+    public static double elevatorMidHatch = 33700;
+    public static double elevatorLowHatch = 5740;// 13100;
+    
+   
+   
+    public static double clawZero = -2300;
     public static double claw90 = -400;
     public static double clawClimb = -1500;
 

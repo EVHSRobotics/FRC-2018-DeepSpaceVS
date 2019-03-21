@@ -27,8 +27,11 @@ import frc.robot.subsystems.SubsystemNames;
 public class ElevatorSetPoint extends Command {
  private double target;
  private double error = 0;
- double speed = .75;
- 
+ double speed = .95;
+ double lowSpeed = .45;
+ double totalDistance;
+ double currentDistance;
+ double endSpeed = .33;
 
  private Elevator elevator;
   public ElevatorSetPoint(double target) {
@@ -36,6 +39,7 @@ public class ElevatorSetPoint extends Command {
     // eg. requires(chassis);
     // requires(Robot.getSubsystem(SubsystemNames.ELEVATOR));
     this.target = target;
+
   }
 
   // Called just before this Command runs the first time
@@ -43,26 +47,32 @@ public class ElevatorSetPoint extends Command {
   protected void initialize() {
     elevator = (Elevator) Robot.getSubsystem(SubsystemNames.ELEVATOR);
     System.out.println("starting elevator set point");
-	// 	if (elevator.getPos() > target) {
-	// 		System.out.println("Using up target speed");
-	// 	//	elevator.updateTargetSpeed(Config.elevatorUpSpeed);
-	// 	} else {
-	// 		System.out.println("Using down target speed");
-	// //		elevator.updateTargetSpeed(Config.elevatorDownSpeed);
-  // 	}
-
-  
-		//elevator.drive(target, ControlMode.MotionMagic);
-
+    totalDistance = Math.abs(target - elevator.getPos());
+    currentDistance = totalDistance;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
+    // currentDistance = Math.abs(target - elevator.getPos());
+    // double inputSpeed = 0;
+    // if (currentDistance < 1000){
+    //   inputSpeed = endSpeed;
+    // }else if(currentDistance > 1000 && currentDistance < 5000){
+    //   inputSpeed = lowSpeed;
+    // }else{
+    //   inputSpeed = speed;
+    // }
+    if (target < elevator.getPos()){
+      speed = Math.abs(speed) * -1;
+    }
+    elevator.drive(speed ,ControlMode.PercentOutput);
     
-    elevator.drive(target, ControlMode.MotionMagic);
     System.out.println("elevator pos: "+ elevator.getPos());
     System.out.println("elevator speed: " + elevator.getVel());
+    
+    
     // if(Math.abs(elevator.getPos() - target) < 5500){
     //   speed = .3;
     // }
@@ -76,18 +86,13 @@ public class ElevatorSetPoint extends Command {
   @Override
   protected boolean isFinished() {
     boolean isFinished = false;
-  // if(Math.abs(elevator.getPos() - target) < 1500)  isFinished = true;
-  // else isFinished = false;
 
-  // elevator.isDone();
-  //if(OI.XWheel.get()) return  true;
-  return elevator.isDone();
+  return elevator.isDone(target);
 
   
 
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
     
@@ -98,7 +103,7 @@ public class ElevatorSetPoint extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    elevator.end();  
+    // elevator.end();  
   }
  
 }

@@ -6,14 +6,26 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.Hatch;
 import frc.robot.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.command.TimedCommand;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SubsystemNames;
-public class Extend1 extends Command {
-  Hatch hatch;
-  public Extend1() {
+
+/**
+ * Add your docs here.
+ */
+public class OutTimed extends TimedCommand {
+  /**
+   * Add your docs here.
+   */
+  
+  private double power;
+  private Intake intake;
+  public OutTimed(double timeout, double power) {
+    super(timeout);
+    this.power = power;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -21,25 +33,17 @@ public class Extend1 extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    hatch = (Hatch)(Robot.getSubsystem(SubsystemNames.HATCH));
-    System.out.println("shifting hatch");
-    hatch.toggleHatch1();
-    //hatch.extendPunch();
+    intake = (Intake) Robot.getSubsystem(SubsystemNames.INTAKE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    System.out.println("running timed intake");
+    intake.drive(ControlMode.PercentOutput, power);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return true;
-  }
-
-  // Called once after isFinished returns true
+  // Called once after timeout
   @Override
   protected void end() {
   }

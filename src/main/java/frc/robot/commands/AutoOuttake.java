@@ -8,13 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Config;
+import frc.robot.*;
 
-public class AutoIntake extends CommandGroup {
+public class AutoOuttake extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoIntake() {
+  public AutoOuttake(double target) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -31,15 +31,8 @@ public class AutoIntake extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new ClawSetPoint(Config.clawZero - 200));
-    // addParallel(new IntakeTillBanner(true, .8, true));
-    addSequential(new InTimed(5, .3));
-    addParallel(new ClawSetPoint(Config.clawZero - 300));
-    // addSequential(command);
-    // addSequential(new IntakeTillBanner(true, -.6, true));
-    addSequential(new ClawSetPoint(Config.claw90));
-
-
-
+    addSequential(new ElevatorSetPoint(target));
+    addSequential(new ClawSetPoint(-570));
+    addSequential(new OutTimed(2, -.35));
   }
 }

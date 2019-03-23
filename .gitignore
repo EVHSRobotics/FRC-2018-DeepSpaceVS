@@ -156,5 +156,23 @@ gradle-app.setting
 .settings/
 bin/
 
+.gitignore
+.vscode/launch.json
+.vscode/settings.json
+.wpilib/wpilib_preferences.json
+build.gradle
+gradle/wrapper/gradles-wrapper.jar
+gradle/wrapper/gradles-wrapper.properties
+gradlew
+gradlew.bat
+settings.gradle
+src/main/develop/example.txt
+src/main/java/frc/robot/Main.java
+src/main/java/frc/robot/OI.java
+src/main/java/frc/robot/Robot.java
+src/main/java/frc/robot/RobotMap.java
+src/main/java/frc/robot/commands/ExampleCommand.java
+src/main/java/frc/robot/subsystems/ExampleSubsystem.java
+
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode

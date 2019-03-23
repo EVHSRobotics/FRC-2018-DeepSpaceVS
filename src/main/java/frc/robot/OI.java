@@ -108,9 +108,9 @@ public class OI {
     bumperRt.whenPressed(new Extend2());
     
     // if(StartBut.get()){
-      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHighHatch));
-      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMidHatch));
-      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLowHatch));
+      YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
+      BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
+      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
      
     dUP.whenPressed(new ClawSetPoint(Config.claw90));
     dDOWN.whenPressed(new ClawSetPoint(Config.clawZero));

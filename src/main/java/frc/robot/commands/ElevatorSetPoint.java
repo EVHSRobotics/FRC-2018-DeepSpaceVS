@@ -27,7 +27,7 @@ import frc.robot.subsystems.SubsystemNames;
 public class ElevatorSetPoint extends Command {
  private double target;
  private double error = 0;
- double speed = .95;
+ double speed = .55;
  double lowSpeed = .45;
  double totalDistance;
  double currentDistance;

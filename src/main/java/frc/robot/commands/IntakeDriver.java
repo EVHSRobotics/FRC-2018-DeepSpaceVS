@@ -34,7 +34,11 @@ public class IntakeDriver extends Command {
     double value = OI.joyXBox.getRawAxis(3) - OI.joyXBox.getRawAxis(2);
 
 
-    intake.drive(ControlMode.PercentOutput, value*1.1);
+    if(value > 0 ){
+      intake.drive(ControlMode.PercentOutput, value);
+    }else {
+      intake.drive(ControlMode.PercentOutput, value*0.8);
+    }
 
   }
 

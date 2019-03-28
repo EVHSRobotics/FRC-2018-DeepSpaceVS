@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoOuttake;
 import frc.robot.commands.CameraToggle;
+import frc.robot.commands.CargoOuttake;
 import frc.robot.commands.ClawSetPoint;
 import frc.robot.commands.ElevatorSetPoint;
 import frc.robot.commands.Extend1;
@@ -106,11 +107,13 @@ public class OI {
     // xBox
     //bumperLt.whenPressed(new Extend1()); //prongs
     bumperRt.whenPressed(new Extend2());
+    bumperLt.whenPressed(new Extend1());
     
     // if(StartBut.get()){
       YBox.whenPressed(new ElevatorSetPoint(Config.elevatorHigh));
       BBox.whenPressed(new ElevatorSetPoint(Config.elevatorMid));
-      ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+      // ABox.whenPressed(new ElevatorSetPoint(Config.elevatorLow));
+      ABox.whenPressed(new CargoOuttake());
      
     dUP.whenPressed(new ClawSetPoint(Config.claw90));
     dDOWN.whenPressed(new ClawSetPoint(Config.clawZero));
